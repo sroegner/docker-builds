@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://namenode:8020</value>
+    </property>
+     
+<!--
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp</value>
+    </property>
+-->
+    <property>
+        <name>io.native.lib.available</name>
+        <value>True</value>
+    </property>
+    <property>
+        <name>fs.trash.interval</name>
+        <value>60</value>
+    </property>
+    <property>
+        <name>io.file.buffer.size</name>
+        <value>65536</value>
+    </property>
+</configuration>
