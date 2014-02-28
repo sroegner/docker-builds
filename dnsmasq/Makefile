@@ -5,7 +5,7 @@ clean:
 	sudo docker rm dnsmasq
 
 image:	
-	sudo docker build -t='sroegner/dnsmasq' .
+	sudo docker build -rm -t='sroegner/dnsmasq' .
 
 container:
 	sudo docker run \
