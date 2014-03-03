@@ -25,6 +25,7 @@ RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn && \
 
 RUN ln -sf /docker/supervisord.conf /etc/supervisord.conf
 
-EXPOSE 8020
+EXPOSE 2181
 EXPOSE 50070
 
+CMD ["/usr/bin/supervisord", "-n"]
