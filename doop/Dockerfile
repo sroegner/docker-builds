@@ -18,12 +18,14 @@ RUN cp -r /docker/hadoop/conf.doop /etc/hadoop && \
     rm -f /etc/hadoop/conf && \
     ln -sf /etc/hadoop/conf.doop /etc/hadoop/conf
 
-RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn && \
+RUN mkdir -p /etc/supervisor/conf.d /data1/hdfs /data1/mapred /data1/yarn && \
     chown hdfs.hadoop /data1/hdfs && \
     chown mapred.hadoop /data1/mapred && \
     chown yarn.hadoop /data1/yarn 
 
-RUN ln -sf /docker/supervisord.conf /etc/supervisord.conf
+RUN cp /docker/etc/supervisord-hdfs.conf /etc/supervisor/conf.d/hdfs.conf && \
+    cp /docker/etc/supervisord-zookeeper.conf /etc/supervisor/conf.d/zookeeper.conf && \
+    cp /docker/etc/supervisord.conf /etc/
 
 EXPOSE 2181
 EXPOSE 50070
