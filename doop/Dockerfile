@@ -3,7 +3,7 @@ FROM centos
 RUN yum clean all && rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN wget -nv http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.0.6.1/hdp.repo -O /etc/yum.repos.d/hdp.repo 
 
-RUN yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client openssl snappy snappy-devel lzo lzo-devel hadoop-lzo hadoop-lzo-native sudo telnet curl python-pip openssh-server
+RUN yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client openssl snappy snappy-devel lzo lzo-devel hadoop-lzo hadoop-lzo-native sudo telnet curl python-pip openssh-server rsync
 RUN pip install supervisor
 
 RUN curl -L -b gpw_e24=http%3A%2F%2Fwww.oracle.com -b oraclelicense=accept-securebackup-cookie http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jdk-7u51-linux-x64.tar.gz > /tmp/jdk.tgz && tar xzf /tmp/jdk.tgz -C /usr/lib && rm -f /tmp/jdk.tgz
