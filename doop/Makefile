@@ -8,7 +8,7 @@ clean:
 
 image:	
 	sudo docker build -rm -t='sroegner/doop' .
-	sudo docker run -u hdfs --env='JAVA_HOME=/usr/lib/java' -h=namenode sroegner/doop hadoop namenode -format
+	sudo docker run -u hdfs --env='JAVA_HOME=/usr/lib/java' -h=namenode sroegner/doop /usr/lib/hadoop/bin/hdfs namenode -format
 	id=$$(sudo docker ps -l -q); \
 	sudo docker commit --author="Steffen Roegner <steffen.roegner@gmail.com>" --run='{"Cmd": ["/usr/bin/supervisord", "-n"], "PortSpecs": ["2181","50070"]}' "$$id" sroegner/doop
 

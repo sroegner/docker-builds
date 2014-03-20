@@ -21,7 +21,7 @@
 
     <property>
         <name>instance.zookeeper.host</name>
-        <value>namenode.sqrrl.local:2181</value>
+        <value>namenode:2181</value>
         <description>comma separated list of zookeeper servers</description>
     </property>
 
@@ -68,10 +68,6 @@
         <value>AES</value>
     </property>
     <property>
-        <name>instance.security.authenticator</name>
-        <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperAuthenticator</value>
-    </property>
-    <property>
         <name>table.cache.block.enable</name>
         <value>true</value>
     </property>
@@ -87,7 +83,7 @@
         <name>trace.user</name>
         <value>root</value>
     </property>
-    <property>
+    <!--    <property>
         <name>instance.security.permissionHandler</name>
         <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperPermissionHandler</value>
     </property>
@@ -99,6 +95,10 @@
         <name>instance.security.authorizor</name>
         <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperAuthorizor</value>
     </property>
+    <property>
+        <name>instance.security.authenticator</name>
+        <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperAuthenticator</value>
+    </property> -->
     <property>
         <name>table.cache.index.enable</name>
         <value>true</value>
