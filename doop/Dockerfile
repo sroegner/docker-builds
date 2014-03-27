@@ -7,10 +7,12 @@ RUN cd /usr/lib && curl -L http://public-repo-1.hortonworks.com/HDP/centos5/2.x/
 RUN cd /usr/lib && curl -L http://apache.osuosl.org/zookeeper/zookeeper-3.4.5/zookeeper-3.4.5.tar.gz | tar xz
 
 RUN ln -s /usr/lib/hadoop-2.2.0.2.0.6.0-102 /usr/lib/hadoop; \
+    chown -R root.root /usr/lib/hadoop-2.2.0.2.0.6.0-102; \
     mkdir -p /etc/hadoop/conf /var/lib/hadoop /var/log/hadoop /var/run/hadoop; \
     rm -rf /usr/lib/hadoop/conf; rm -rf /usr/lib/hadoop/logs; \
     ln -s /etc/hadoop/conf /usr/lib/hadoop/conf; \
     ln -s /var/log/hadoop /usr/lib/hadoop/logs; \
+    chown -R root.root /usr/lib/zookeeper-3.4.5; \
     ln -s /usr/lib/zookeeper-3.4.5 /usr/lib/zookeeper; \
     mkdir -p /etc/zookeeper/conf /var/run/zookeeper /var/lib/zookeeper /var/log/zookeeper; \
     rm -rf /usr/lib/zookeeper/conf; rm -rf /usr/lib/zookeeper/logs; \
