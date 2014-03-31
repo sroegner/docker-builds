@@ -23,7 +23,7 @@ RUN mkdir -p /root/.ssh; \
     chmod 700 /var/run/sshd && \
     echo changeme | passwd --stdin root && \
     /etc/init.d/sshd start && \
-    mkdir -p /etc/supervisor/conf.d && \
+    mkdir -p /etc/supervisor/conf.d /var/log/supervisor && \
     cp /docker/supervisord-sshd.conf /etc/supervisor/conf.d/sshd.conf && \
     cp /docker/supervisord.conf /etc/
 
