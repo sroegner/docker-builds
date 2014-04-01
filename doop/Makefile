@@ -13,7 +13,7 @@ image:
 	sudo docker build -t=$(tag) .
 	sudo docker run -u hdfs --env='JAVA_HOME=/usr/lib/java' -h=namenode $(tag) /usr/lib/hadoop/bin/hdfs namenode -format
 	sudo docker run -u root --hostname=namenode $(tag):latest /usr/bin/yum clean all
-	sudo docker commit --author="Steffen Roegner <steffen@sqrrl.com>" --run='{"Cmd": ["/usr/bin/supervisord", "-n"], "PortSpecs": ["22","2181","50070", "8088"]}' $$(sudo docker ps -l -q) $(tag)
+	sudo docker commit --author="Steffen Roegner <steffen@sqrrl.com>" --run='{"Cmd": ["/usr/bin/supervisord", "-n"]}' $$(sudo docker ps -l -q) $(tag)
 
 push:
 	sudo docker push $(tag)

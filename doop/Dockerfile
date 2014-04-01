@@ -42,8 +42,6 @@ RUN cp -r /docker/hadoop/conf.doop/* /etc/hadoop/conf && \
     cp /docker/etc/supervisord-hdfs.conf /etc/supervisor/conf.d/hdfs.conf && \
     cp /docker/etc/supervisord-zookeeper.conf /etc/supervisor/conf.d/zookeeper.conf 
 
-EXPOSE 22
-EXPOSE 2181
-EXPOSE 50070
+EXPOSE 22 2181 8020 50070
 
 CMD ["/usr/bin/supervisord", "-n"]
