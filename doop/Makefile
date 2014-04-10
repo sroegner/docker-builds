@@ -11,16 +11,19 @@ clean:
 
 image:	
 	sudo docker build -t=$(tag) .
-	sudo docker run -u hdfs --env='JAVA_HOME=/usr/lib/java' -h=namenode $(tag) /usr/lib/hadoop/bin/hdfs namenode -format
-	sudo docker run -u root --hostname=namenode $(tag):latest /usr/bin/yum clean all
-	sudo docker commit --author="Steffen Roegner <steffen@sqrrl.com>" --run='{"Cmd": ["/usr/bin/supervisord", "-n"]}' $$(sudo docker ps -l -q) $(tag)
+	sudo docker run -u hdfs --env='JAVA_HOME=/usr/lib/java' --hostname=namenode $(tag) /usr/lib/hadoop/bin/hdfs namenode -format
+	sudo docker commit --author="Steffen Roegner <steffen@sqrrl.com>" $$(sudo docker ps -l -q) $(tag)
 
 push:
 	sudo docker push $(tag)
 
 container:
-	sudo docker run -d --name=$(box_name) -h=namenode -P $(tag) /usr/bin/supervisord -n
+	sudo docker run -d --user=root --name=$(box_name) -h=namenode -P $(tag) /usr/bin/supervisord -n
+	sleep 2
 	sudo docker logs $(box_name)
+
+ssh:
+	ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $$(sudo docker port $(box_name) 22|awk -F':' '{print $$2}') root@localhost
 
 erase:	clean
 	sudo docker rmi $(tag)
@@ -28,3 +31,5 @@ erase:	clean
 shell:
 	sudo docker run -i -t --hostname=namenode $(tag) /bin/bash
 
+logs:
+	sudo docker logs $(box_name)
