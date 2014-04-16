@@ -1,6 +1,7 @@
 FROM sroegner/doop
 
-RUN cd /usr/lib && curl -L http://apache.osuosl.org/accumulo/1.5.1/accumulo-1.5.1-bin.tar.gz | tar xz
+RUN curl -L http://apache.osuosl.org/accumulo/1.5.1/accumulo-1.5.1-bin.tar.gz -o /tmp/acc.tgz && \
+    tar xzf /tmp/acc.tgz -C /usr/lib && rm -vf /tmp/acc.tgz && id 
 RUN ln -s /usr/lib/accumulo-1.5.1 /usr/lib/accumulo; \
     mkdir -p /etc/accumulo/conf /var/run/accumulo /var/lib/accumulo /var/log/accumulo; \
     useradd -u 6040 -G hadoop accumulo; \
@@ -9,6 +10,9 @@ RUN ln -s /usr/lib/accumulo-1.5.1 /usr/lib/accumulo; \
     ln -s /etc/accumulo/conf /usr/lib/accumulo/conf; \
     ln -s /var/log/accumulo /usr/lib/accumulo/logs; 
     
+RUN echo -e "\nvm.swappiness = 10" >> /etc/sysctl.conf; \
+    echo "vm.overcommit_memory = 0" >> /etc/sysctl.conf
+
 ADD . /docker
 RUN cp -vr /docker/accumulo.conf/* /etc/accumulo/conf/; \
     mkdir -p /root/.ssh /home/accumulo/.ssh; \
