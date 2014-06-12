@@ -11,7 +11,7 @@ clean:
 
 image:	
 	sudo docker build -t=$(tag) .
-	sudo docker run -u hdfs --env='JAVA_HOME=/usr/lib/java' --hostname=namenode $(tag) /usr/lib/hadoop/bin/hdfs namenode -format
+	sudo docker run -u hdfs --env='JAVA_HOME=/usr' --hostname=namenode $(tag) /usr/lib/hadoop/bin/hdfs namenode -format
 	sudo docker commit --author="Steffen Roegner <steffen@sqrrl.com>" $$(sudo docker ps -l -q) $(tag)
 	sudo docker run -u root  $(tag) /usr/bin/yum clean all
 	sudo docker commit --author="Steffen Roegner <steffen@sqrrl.com>" $$(sudo docker ps -l -q) $(tag)

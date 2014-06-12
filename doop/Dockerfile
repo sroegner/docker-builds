@@ -3,10 +3,6 @@ FROM sroegner/centos-base-ssh
 RUN cd /usr/lib && \
     curl -L http://public-repo-1.hortonworks.com/HDP/centos5/2.x/updates/2.0.6.1/tars/hadoop-2.2.0.2.0.6.0-102.tar.gz | tar xz; \
     curl -L http://apache.osuosl.org/zookeeper/zookeeper-3.4.5/zookeeper-3.4.5.tar.gz | tar xz; \
-    curl -L -b gpw_e24=http%3A%2F%2Fwww.oracle.com -b oraclelicense=accept-securebackup-cookie \
-      http://download.oracle.com/otn-pub/java/jdk/7u51-b13/jdk-7u51-linux-x64.tar.gz | tar xz; \ 
-    ln -s $(ls -1d /usr/lib/jdk1.7*|head -1) /usr/lib/java && \
-    echo "export JAVA_HOME=/usr/lib/java" > /etc/profile.d/java.sh; \
     ln -s /usr/lib/hadoop-2.2.0.2.0.6.0-102 /usr/lib/hadoop; \
     chown -R root.root /usr/lib/hadoop-2.2.0.2.0.6.0-102; \
     mkdir -p /etc/hadoop/conf /var/lib/hadoop /var/log/hadoop /var/run/hadoop; \

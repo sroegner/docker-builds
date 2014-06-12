@@ -1,4 +1,4 @@
-export JAVA_HOME=/usr/lib/java
+export JAVA_HOME=/usr
 export HADOOP_PREFIX=/usr/lib/hadoop
 export HADOOP_CONF_DIR=/etc/hadoop/conf
 export PATH=$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin:${JAVA_HOME}/bin:$PATH
