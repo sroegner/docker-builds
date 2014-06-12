@@ -1,5 +1,6 @@
 box_name = $(notdir $(CURDIR))
 tag := sroegner/$(box_name)
+sshopts := -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null
 
 all:
 	echo "Can do 'clean', 'image' or 'container'"
@@ -23,4 +24,7 @@ container:
 
 shell:
 	sudo docker run -i -t $(tag) /bin/bash
+
+ssh:
+	ssh $(sshopts) -p $$(sudo docker port $(box_name) 22|awk -F':' '{print $$2}') root@localhost
 
