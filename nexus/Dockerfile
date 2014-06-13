@@ -1,6 +1,7 @@
 FROM sroegner/centos-base-ssh
 
-RUN mkdir /tmp/nexus && \
+RUN yum -y install createrepo; \
+    mkdir /tmp/nexus && \
     cd /tmp/nexus && \
     curl -L http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz | tar xz
 
