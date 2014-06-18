@@ -19,12 +19,15 @@ keypair:
 	test -f $(CURDIR)/srkey || ssh-keygen -q -t dsa -b 1024 -N '' -C 'docker ssh key' -f $(CURDIR)/srkey
 
 container:
-	sudo docker run -d --name=$(box_name) -h=namenode -P $(tag) /usr/bin/supervisord -n
+	sudo docker run -d --name=$(box_name) -p=127.0.0.12:2211:22 $(tag) /usr/bin/supervisord -n
 	sudo docker ps 
 
 shell:
 	sudo docker run -i -t $(tag) /bin/bash
 
 ssh:
-	ssh $(sshopts) -p $$(sudo docker port $(box_name) 22|awk -F':' '{print $$2}') root@localhost
+	ssh -i $(CURDIR)/srkey -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 2211 root@127.0.0.12
+
+erase:	clean
+	sudo docker rmi $(tag)
 
