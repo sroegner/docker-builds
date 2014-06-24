@@ -1,10 +1,10 @@
 FROM sroegner/centos-base-ssh
 
 RUN cd /usr/lib && \
-    curl -L http://public-repo-1.hortonworks.com/HDP/centos5/2.x/updates/2.0.6.1/tars/hadoop-2.2.0.2.0.6.0-102.tar.gz | tar xz; \
+    curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.1.2.1/tars/hadoop-2.4.0.2.1.2.1-471.tar.gz | tar xz; \
     curl -L http://apache.osuosl.org/zookeeper/zookeeper-3.4.5/zookeeper-3.4.5.tar.gz | tar xz; \
-    ln -s /usr/lib/hadoop-2.2.0.2.0.6.0-102 /usr/lib/hadoop; \
-    chown -R root.root /usr/lib/hadoop-2.2.0.2.0.6.0-102; \
+    ln -s /usr/lib/hadoop-2.4.0.2.1.2.1-471 /usr/lib/hadoop; \
+    chown -R root.root /usr/lib/hadoop-2.4.0.2.1.2.1-471; \
     mkdir -p /etc/hadoop/conf /var/lib/hadoop /var/log/hadoop /var/run/hadoop; \
     rm -rf /usr/lib/hadoop/conf; rm -rf /usr/lib/hadoop/logs; \
     ln -s /etc/hadoop/conf /usr/lib/hadoop/conf; \
