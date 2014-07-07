@@ -2,11 +2,11 @@
 # adding some essential packages and a jdk
 # ready openssh server
 
-FROM centos:latest
+FROM centos:6.4
 
 RUN yum -y update && \
     rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm && \
-    yum -y install openssl snappy snappy-devel lzo lzo-devel sudo telnet curl python-pip openssh-server rsync passwd which tar git java-1.7.0-openjdk-devel.x86_64 && \
+    yum -y install openssl snappy snappy-devel lzo lzo-devel unzip sudo telnet curl python-pip openssh-server rsync passwd which tar git bind-utils tcpdump strace java-1.7.0-openjdk-devel.x86_64 && \
     yum clean all && \
     pip install supervisor 
 
