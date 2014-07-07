@@ -10,9 +10,6 @@ RUN ln -s /usr/lib/accumulo-1.5.1 /usr/lib/accumulo; \
     ln -s /etc/accumulo/conf /usr/lib/accumulo/conf; \
     ln -s /var/log/accumulo /usr/lib/accumulo/logs; 
     
-RUN echo -e "\nvm.swappiness = 10" >> /etc/sysctl.conf; \
-    echo "vm.overcommit_memory = 0" >> /etc/sysctl.conf
-
 ADD . /docker
 RUN cp -vr /docker/accumulo.conf/* /etc/accumulo/conf/; \
     mkdir -p /root/.ssh /home/accumulo/.ssh; \
@@ -21,9 +18,5 @@ RUN cp -vr /docker/accumulo.conf/* /etc/accumulo/conf/; \
     cp -vr /docker/dotssh/* /home/accumulo/.ssh/ ;\
     chown -R accumulo.accumulo /home/accumulo/.ssh
 
-EXPOSE 22
-EXPOSE 2181
-EXPOSE 50070
-EXPOSE 50095
-
+EXPOSE 22 2181 50070 50095 
 CMD ["/usr/bin/supervisord", "-n"]

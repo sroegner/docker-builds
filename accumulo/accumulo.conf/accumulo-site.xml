@@ -44,7 +44,7 @@
     <property>
         <name>trace.token.property.password</name>
         <!-- change this to the root user's password, and/or change the user below -->
-        <value>secret</value>
+        <value>DEFAULT</value>
     </property>
 
     <!-- profile 3GB -->
@@ -83,22 +83,6 @@
         <name>trace.user</name>
         <value>root</value>
     </property>
-    <!--    <property>
-        <name>instance.security.permissionHandler</name>
-        <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperPermissionHandler</value>
-    </property>
-    <property>
-        <name>crypto.secret.key.encryption.strategy.class</name>
-        <value>org.apache.accumulo.core.security.crypto.CachingHDFSSecretKeyEncryptionStrategy</value>
-    </property>
-    <property>
-        <name>instance.security.authorizor</name>
-        <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperAuthorizor</value>
-    </property>
-    <property>
-        <name>instance.security.authenticator</name>
-        <value>com.sqrrl.analytics.extensions.accumulo.security.ShiroAndZookeeperAuthenticator</value>
-    </property> -->
     <property>
         <name>table.cache.index.enable</name>
         <value>true</value>
