@@ -12,4 +12,4 @@ pathmunge () {
 
 pathmunge /usr/lib/hadoop/bin
 pathmunge /usr/lib/accumulo/bin
-
+pathmunge /usr/lib/zookeeper/bin
