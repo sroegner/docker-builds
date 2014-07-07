@@ -14,6 +14,7 @@ RUN echo -e "\nvm.swappiness = 10" >> /etc/sysctl.conf; \
     echo "vm.overcommit_memory = 0" >> /etc/sysctl.conf
 
 ADD . /docker
+ADD accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
 RUN cp -vr /docker/accumulo.conf/* /etc/accumulo/conf/; \
     mkdir -p /root/.ssh /home/accumulo/.ssh; \
     chmod 700 /root/.ssh /home/accumulo/.ssh; \
