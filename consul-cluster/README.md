@@ -16,5 +16,5 @@ Containers:
 - agent2: 127.0.0.24
 - agent3: 127.0.0.25
 
-Use the Makefile (`make image`) to build, (`make cluster`) to run, stop with `make clean`. There is also `make server1` and `make agent1` which will login to the respective container with ssh.
+Use the Makefile (`make image`) to build, (`make cluster`) to run, stop with `make clean`. There is also `make server1` and `make agent1` which will login to the respective container with ssh. Just take a look at a "cold" container with `make shell`.
 

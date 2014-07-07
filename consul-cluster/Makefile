@@ -16,7 +16,7 @@ push:
 shell:
 	sudo docker run -i -t $(tag) /bin/bash
 
-cluster-clean:
+clean:
 	sudo docker stop server1 || :
 	sudo docker rm server1 || :
 	sudo docker stop server2 || :
@@ -30,7 +30,7 @@ cluster-clean:
 	sudo docker stop agent3 || :
 	sudo docker rm agent3 || :
 
-erase:	cluster-clean
+erase:	clean
 	sudo docker rmi $(tag)
 
 cluster:
