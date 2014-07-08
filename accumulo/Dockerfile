@@ -11,6 +11,7 @@ RUN ln -s /usr/lib/accumulo-1.5.1 /usr/lib/accumulo; \
     ln -s /var/log/accumulo /usr/lib/accumulo/logs; 
     
 ADD . /docker
+ADD accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
 RUN cp -vr /docker/accumulo.conf/* /etc/accumulo/conf/; \
     mkdir -p /root/.ssh /home/accumulo/.ssh; \
     chmod 700 /root/.ssh /home/accumulo/.ssh; \
