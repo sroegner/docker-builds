@@ -39,7 +39,7 @@ else
 fi
 
 test -z "$HADOOP_CONF_DIR"       && export HADOOP_CONF_DIR=/etc/hadoop/conf
-test -z "$JAVA_HOME"             && export JAVA_HOME=/usr
+test -z "$JAVA_HOME"             && export JAVA_HOME=/usr/lib/jvm/java-1.7.0
 test -z "$ZOOKEEPER_HOME"        && export ZOOKEEPER_HOME=/usr/lib/zookeeper
 test -z "$ACCUMULO_LOG_DIR"      && export ACCUMULO_LOG_DIR=/var/log/accumulo
 if [ -f /etc/accumulo/conf/accumulo.policy ]
