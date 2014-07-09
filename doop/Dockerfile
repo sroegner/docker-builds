@@ -36,6 +36,7 @@ RUN cp -r /docker/hadoop/conf.doop/* /etc/hadoop/conf && \
     chown mapred.hadoop /data1/mapred && \
     chown yarn.hadoop /data1/yarn && \
     cp /docker/etc/supervisord-hdfs.conf /etc/supervisor/conf.d/hdfs.conf && \
+    cp /docker/etc/supervisord-yarn.conf /etc/supervisor/conf.d/yarn.conf && \
     cp /docker/etc/supervisord-zookeeper.conf /etc/supervisor/conf.d/zookeeper.conf 
 
 EXPOSE 22 2181 8020 50070
