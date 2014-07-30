@@ -1,5 +1,5 @@
 box_name = $(notdir $(CURDIR))
-tag := sroegner/$(box_name)
+tag := sroegner/$(box_name):3.1
 sshopts := -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null
 data_dir := /var/lib/consul/data
 ui_dir := /var/lib/consul/ui/dist

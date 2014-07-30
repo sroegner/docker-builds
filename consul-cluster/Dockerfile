@@ -5,8 +5,8 @@
 FROM sroegner/centos-base-ssh
 
 RUN mkdir -p /var/log/consul /etc/consul /var/lib/consul/data /var/lib/consul/ui /var/lib/consul/scripts && \
-    curl -L https://dl.bintray.com/mitchellh/consul/0.3.0_linux_amd64.zip -o /tmp/c.zip && \
-    curl -L https://dl.bintray.com/mitchellh/consul/0.3.0_web_ui.zip -o /tmp/ui.zip && \
+    curl -L https://dl.bintray.com/mitchellh/consul/0.3.1_linux_amd64.zip -o /tmp/c.zip && \
+    curl -L https://dl.bintray.com/mitchellh/consul/0.3.1_web_ui.zip -o /tmp/ui.zip && \
     unzip /tmp/c.zip -d /usr/sbin && \
     unzip /tmp/ui.zip -d /var/lib/consul/ui
 

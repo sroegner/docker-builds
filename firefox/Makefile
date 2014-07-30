@@ -25,7 +25,7 @@ ssh:
 	ssh -X -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $$(sudo docker port $(box_name) 22|awk -F':' '{print $$2}') root@localhost
 
 firefox:
-	ssh -X -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $$(sudo docker port $(box_name) 22|awk -F':' '{print $$2}') root@localhost firefox
+	ssh  -i $(CURDIR)/../centos-base-ssh/srkey -X -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $$(sudo docker port $(box_name) 22|awk -F':' '{print $$2}') root@localhost firefox
 
 erase:	clean
 	sudo docker rmi $(tag)
