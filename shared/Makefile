@@ -14,14 +14,18 @@ push:
 	$(DOCKER_CMD) push $(tag)
 
 container:
-	$(DOCKER_CMD) run -d --name=$(box_name) \
-			--hostname=$(hostname) -P \
+	$(DOCKER_CMD) run -d --name=$(box_name) $(volumes) \
+			--hostname=$(hostname) \
+			--publish=$(IP):22:22 \
+			--publish=$(IP):80:80 \
+			--publish=$(IP):443:443 \
+			--publish=$(IP):3000:3000 \
 			--cidfile=$(CIDFILE) \
 			$(tag) /usr/bin/supervisord -n
 	$(DOCKER_CMD) ps 
 
 ssh:
-	ssh -i ~/.ssh/sqrrl-dev.pem -p 2288 root@$(IP)
+	ssh -i $(CURDIR)/../centos-base-ssh/srkey root@$(IP)
 
 shell:
 	$(DOCKER_CMD) run -i -t $(tag) /bin/bash
