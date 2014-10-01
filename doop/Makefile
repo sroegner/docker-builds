@@ -66,3 +66,11 @@ container-dnode3:
 
 push-datanode:
 	$(DOCKER_CMD) push $(tag)-datanode
+
+clean:
+	sudo docker rm -f $(container_name)-dnode1 || :
+	sudo docker rm -f $(container_name)-dnode2 || :
+	sudo docker rm -f $(container_name)-dnode3 || :
+	sudo docker rm -f $(container_name)-dnode4 || :
+	sudo docker rm -f $(container_name) || :
+

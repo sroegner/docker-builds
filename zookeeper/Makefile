@@ -1,21 +1,16 @@
+hostname := centos-base
+thirdoctet := 20
+include ../shared/Makefile.vars
+tag := "$(reg)/$(box_name):6"
+include ../shared/Makefile
 
-all:
-	echo "Can do 'clean', 'image' or 'container'"
-
-clean:
-	sudo docker stop zookeeper
-	sudo docker rm zookeeper
-
-image:	
-	sudo docker build -t='sroegner/zookeeper' .
+image:
+	cp -r ../shared/config.supervisor conf.supervisor
+	cp -r ../shared/config.zk conf.zk
+	$(DOCKER_CMD) build -t=$(tag) .
 
 container:
-	sudo docker run -name=zookeeper -h=zookeeper -p 127.0.0.10:2181:2181 -d sroegner/zookeeper
-	sudo docker ps 
+	$(DOCKER_CMD) run -d --name=$(container_name) --publish=$(IP):2181:2181 $(tag)
+	$(DOCKER_CMD) ps 
 
-commit:
-	sudo docker commit -author="Steffen Roegner <steffen.roegner@gmail.com>" \
-			-run='{"Cmd": ["/usr/lib/zookeeper/bin/zkServer.sh", "start-foreground"], "PortSpecs": ["2181"]}' \
-			$$(sudo docker ps -q zookeeper) \
-			sroegner/zookeeper
 

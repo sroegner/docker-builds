@@ -1,19 +1,16 @@
-FROM sroegner/docker-centos-salt
+FROM sroegner/centos-base-ssh:6
+MAINTAINER Steffen Roegner 'steffen.roegner@gmail.com'
 
-ADD saltfiles/salt /etc/salt
-ADD saltfiles/srv /srv
+RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.1-latest/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
+    yum -y install zookeeper
 
-RUN mkdir -p /var/cache/salt
-# the sleeps are supposed to help salt-master to materialize 
-# the gitfs remotes in the master file and receive the key
-# request from the local minion process
-RUN /usr/bin/salt-master -d && \
-    /usr/bin/salt-minion -d && \
-    sleep 10; \
-    /usr/bin/salt-key -A -y; \
-    sleep 20; \
-    /usr/bin/salt \* state.highstate
+COPY conf.supervisor/zookeeper.conf /etc/supervisor/conf.d/
+COPY conf.zk/zookeeper-env.sh /etc/zookeeper/conf/
+COPY conf.zk/zoo.cfg /etc/zookeeper/conf/
 
 EXPOSE 2181
+
+#CMD ["/usr/bin/supervisord", "-n"]
 USER zookeeper
-CMD ["/usr/lib/zookeeper/bin/zkServer.sh", "start-foreground"]
+ENTRYPOINT ["/usr/lib/zookeeper/bin/zkServer.sh", "start-foreground"]
+
