@@ -3,9 +3,8 @@ all:
 
 clean:
 	rm -rvf conf.*
-	rm -vf $(CIDFILE)
-	$(DOCKER_CMD) stop $(box_name) || :
-	$(DOCKER_CMD) rm $(box_name) || :
+	$(DOCKER_CMD) stop $(container_name) || :
+	$(DOCKER_CMD) rm $(container_name) || :
 
 image:	
 	$(DOCKER_CMD) build -t=$(tag) .
@@ -14,9 +13,9 @@ push:
 	$(DOCKER_CMD) push $(tag)
 
 container:
-	$(DOCKER_CMD) run -d --name=$(box_name) $(volumes) \
+	$(DOCKER_CMD) run -d --name=$(container_name) $(volumes) \
 			--hostname=$(hostname) \
-			--publish=$(IP):22:22 \
+			--publish=$(IP):2212:2212 \
 			--publish=$(IP):80:80 \
 			--publish=$(IP):443:443 \
 			--publish=$(IP):3000:3000 \
@@ -34,5 +33,8 @@ erase: clean
 	$(DOCKER_CMD) rmi $(tag) 
 
 logs:
-	$(DOCKER_CMD) logs $(box_name)
+	$(DOCKER_CMD) logs $(container_name)
+
+buildinfo:
+	echo "Buildinfo for $(tag)"
 

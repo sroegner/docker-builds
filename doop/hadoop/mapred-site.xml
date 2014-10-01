@@ -1,0 +1,84 @@
+<!--Thu Jul  3 00:53:24 2014-->
+    <configuration>
+
+    <property>
+      <name>mapreduce.jobhistory.address</name>
+      <value>0.0.0.0:10020</value>
+    </property>
+
+    <property>
+      <name>mapreduce.jobhistory.webapp.address</name>
+      <value>0.0.0.0:19888</value>
+    </property>
+
+    <property>
+      <name>mapreduce.framework.name</name>
+      <value>yarn</value>
+    </property>
+
+    <property>
+      <name>mapreduce.map.java.opts</name>
+      <value>-Xmx1638m</value>
+    </property>
+
+    <property>
+      <name>mapreduce.application.classpath</name>
+      <value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*,$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
+    </property>
+
+    <property>
+      <name>mapreduce.reduce.java.opts</name>
+      <value>-Xmx1638m</value>
+    </property>
+
+    <property>
+      <name>mapreduce.am.max-attempts</name>
+      <value>2</value>
+    </property>
+
+    <property>
+      <name>mapreduce.reduce.log.level</name>
+      <value>DEBUG</value>
+    </property>
+
+    <property>
+      <name>yarn.app.mapreduce.am.log.level</name>
+      <value>DEBUG</value>
+    </property>
+
+    <property>
+      <name>mapreduce.map.log.level</name>
+      <value>DEBUG</value>
+    </property>
+
+    <property>
+      <name>mapreduce.map.memory.mb</name>
+      <value>2048</value>
+    </property>
+
+    <property>
+      <name>mapreduce.reduce.memory.mb</name>
+      <value>2048</value>
+    </property>
+
+    <property>
+      <name>mapreduce.jobhistory.intermediate-done-dir</name>
+      <value>/mr-history/done_intermediate</value>
+    </property>
+
+    <property>
+      <name>mapreduce.jobhistory.done-dir</name>
+      <value>/mr-history/done</value>
+    </property>
+
+    <property>
+      <name>yarn.app.mapreduce.am.staging-dir</name>
+      <value>/user</value>
+    </property>
+
+    <property>
+      <name>mapreduce.admin.reduce.child.java.opts</name>
+      <value>-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN</value>
+    </property>
+
+</configuration>

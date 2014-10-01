@@ -1,0 +1,93 @@
+<!--Thu Jul  3 00:51:31 2014-->
+    <configuration>
+    <property>
+      <name>dfs.namenode.rpc-bind-host</name>
+      <value>0.0.0.0</value>
+    </property>
+    
+    <property>
+      <name>dfs.datanode.address</name>
+      <value>0.0.0.0:50010</value>
+    </property>
+    
+    <property>
+      <name>dfs.namenode.https-address</name>
+      <value>0.0.0.0:50470</value>
+    </property>
+    
+    <property>
+      <name>dfs.datanode.ipc.address</name>
+      <value>0.0.0.0:8010</value>
+    </property>
+
+    <property>
+      <name>dfs.namenode.http-address</name>
+      <value>0.0.0.0:50070</value>
+    </property>
+    
+    <property>
+      <name>dfs.namenode.secondary.http-address</name>
+      <value>0.0.0.0:50090</value>
+    </property>
+    
+    <property>
+      <name>dfs.datanode.http.address</name>
+      <value>0.0.0.0:50075</value>
+    </property>
+    
+    <property>
+      <name>dfs.journalnode.http-address</name>
+      <value>0.0.0.0:8480</value>
+    </property>
+    
+    <property>
+      <name>dfs.namenode.name.dir</name>
+      <value>/data1/hdfs/namenode</value>
+    </property>
+    
+    <property>
+      <name>dfs.namenode.checkpoint.dir</name>
+      <value>/data1/hdfs/namesecondary</value>
+    </property>
+    
+    <property>
+      <name>dfs.datanode.data.dir</name>
+      <value>/data1/hdfs/data</value>
+    </property>
+    
+    <property>
+      <name>dfs.replication</name>
+      <value>1</value>
+    </property>
+    
+    <!--<property>
+      <name>dfs.hosts</name>
+      <value>/etc/hadoop/conf/dfs.hosts</value>
+    </property>
+
+    <property>
+      <name>dfs.hosts.exclude</name>
+      <value>/etc/hadoop/conf/dfs.exclude</value>
+    </property>-->
+    
+    <property>
+      <name>dfs.datanode.sync.behind.writes</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>dfs.support.append</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>dfs.datanode.synconclose</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>dfs.durable.sync</name>
+      <value>true</value>
+    </property>
+    
+</configuration>

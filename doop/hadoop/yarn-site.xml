@@ -1,0 +1,118 @@
+<configuration>
+    
+    <property>
+      <name>yarn.resourcemanager.resource-tracker.address</name>
+      <value>namenode:8025</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.address</name>
+      <value>namenode:8050</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.scheduler.address</name>
+      <value>namenode:8030</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.address</name>
+      <value>0.0.0.0:45454</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.webapp.address</name>
+      <value>0.0.0.0:8042</value>
+    </property>
+
+    <property>
+      <name>yarn.timeline-service.webapp.address</name>
+      <value>0.0.0.0:8188</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.webapp.address</name>
+      <value>0.0.0.0:8088</value>
+    </property>
+    
+    <property>
+      <name>yarn.timeline-service.address</name>
+      <value>0.0.0.0:10200</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.admin.address</name>
+      <value>0.0.0.0:8141</value>
+    </property>
+    
+    <property>
+      <name>yarn.timeline-service.webapp.https.address</name>
+      <value>0.0.0.0:8190</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.hostname</name>
+      <value>namenode</value>
+    </property>
+    
+    <property>
+      <name>yarn.log-aggregation-enable</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>yarn.timeline-service.enabled</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.local-dirs</name>
+      <value>/data1/yarn/local</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.log-dirs</name>
+      <value>/data1/yarn/log</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.remote-app-log-dir</name>
+      <value>/app-logs</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.aux-services</name>
+      <value>mapreduce_shuffle</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.nodes.exclude-path</name>
+      <value>/etc/hadoop/conf/yarn.exclude</value>
+    </property>
+    
+    <property>
+      <name>yarn.timeline-service.leveldb-timeline-store.path</name>
+      <value>/var/log/hadoop-yarn/timeline</value>
+    </property>
+    
+    <property>
+      <name>yarn.log.server.url</name>
+      <value>http://namenode:19888/jobhistory/logs</value>
+    </property>
+    
+    <property>
+      <name>yarn.application.classpath</name>
+      <value>/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.container-executor.class</name>
+      <value>org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor</value>
+    </property>
+
+    <property>
+      <name>yarn.nodemanager.linux-container-executor.group</name>
+      <value>yarn</value>
+    </property>
+
+</configuration>

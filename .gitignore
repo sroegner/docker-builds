@@ -2,4 +2,6 @@ dnsmasq.hosts
 watchmen/watchmen-config/hosts.js
 saltfiles
 *.container.id
+conf.zk
+conf.supervisor
 
