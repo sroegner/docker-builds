@@ -38,3 +38,14 @@ will yield
 
 ![alt text](https://github.com/sroegner/docker-builds/raw/master/doop/doop-cluster.png "doop cluster with two datanode containers")
 
+## nexus
+
+A single Sonatype Nexus java process, no ssh. Good for local maven testing - exposes port 8081.
+
+## zookeeper
+
+A single zookeeper java process, no ssh. Exposes port 2181.
+
+## consul-cluster
+
+Consul by HashiCorp! Try it in single-container or cluster mode.
