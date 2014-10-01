@@ -1,17 +1,8 @@
-all:
-	echo "Can do 'clean', 'image' or 'container'"
-clean:
-	sudo docker stop dnsmasq
-	sudo docker rm dnsmasq
-
-image:	
-	sudo docker build -rm -t='sroegner/dnsmasq' .
+hostname := dnsmasq
+thirdoctet := 24
+include ../shared/Makefile.vars
+include ../shared/Makefile
 
 container:
-	sudo docker run \
-	-v="$$(pwd)/dnsmasq.hosts:/dnsmasq.hosts" \
-	-name=dnsmasq \
-	-p='127.0.0.10:53:5353/udp' \
-	-d sroegner/dnsmasq
-	sudo docker ps 
-	sudo docker logs $$(sudo docker ps -l -q)
+	$(DOCKER_CMD) run -d -v=$(CURDIR)/dnsmasq.hosts:/dnsmasq.hosts --name=$(container_name) --publish=$(IP):5353:5353 $(tag)
+

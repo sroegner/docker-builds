@@ -1,12 +1,15 @@
-FROM ubuntu
+FROM sroegner/centos-base-ssh:6
+MAINTAINER Steffen Roegner 'steffen.roegner@gmail.com'
 
-VOLUME [ "/dnsmasq.hosts" ]
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes dnsmasq-base dnsutils
-ADD dnsmasq.conf /etc/dnsmasq.conf
-ADD resolv.dnsmasq.conf /etc/resolv.dnsmasq.conf
+RUN yum -y install dnsmasq
 
-EXPOSE 5353/udp
+COPY dnsmasq.conf /etc/
+COPY resolv.dnsmasq.conf /etc/
 
-CMD ["/usr/sbin/dnsmasq", "-d"]
-#ENTRYPOINT ["/usr/sbin/dnsmasq"]
+VOLUME /dnsmasq.hosts
+
+EXPOSE 5353
+
+ENTRYPOINT ["/usr/sbin/dnsmasq", "-d"]
+

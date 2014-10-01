@@ -1,7 +1,6 @@
 hostname := centos-base
-thirdoctet := 20
+thirdoctet := 28
 include ../shared/Makefile.vars
-tag := "$(reg)/$(box_name):6"
 include ../shared/Makefile
 
 image:
@@ -11,6 +10,4 @@ image:
 
 container:
 	$(DOCKER_CMD) run -d --name=$(container_name) --publish=$(IP):2181:2181 $(tag)
-	$(DOCKER_CMD) ps 
-
 
