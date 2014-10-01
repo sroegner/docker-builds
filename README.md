@@ -49,3 +49,7 @@ A single zookeeper java process, no ssh. Exposes port 2181.
 ## consul-cluster
 
 Consul by HashiCorp! Try it in single-container or cluster mode.
+
+## firefox
+
+You can run the firefox in this container via X11 forwarding - it runs on top of an 1.6 OpenJDK to be used with older Applets (like in Supermicro server IPMI web console)
