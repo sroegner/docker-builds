@@ -24,7 +24,7 @@ container:
 	$(DOCKER_CMD) ps 
 
 ssh:
-	ssh -i $(CURDIR)/../centos-base-ssh/srkey root@$(IP)
+	ssh $(sshopts) -p 2212 root@$(IP)
 
 shell:
 	$(DOCKER_CMD) run -i -t $(tag) /bin/bash
@@ -35,6 +35,6 @@ erase: clean
 logs:
 	$(DOCKER_CMD) logs $(container_name)
 
-buildinfo:
+info:
 	echo "Buildinfo for $(tag)"
 

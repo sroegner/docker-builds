@@ -5,5 +5,5 @@ include ../shared/Makefile
 
 
 firefox:	clean container
-	ssh -i $(CURDIR)/../centos-base-ssh/srkey -X $(sshopts) root@$(IP) firefox
+	ssh -X $(sshopts) root@$(IP) firefox
 
