@@ -1,8 +1,8 @@
 FROM sroegner/doop
 
-RUN curl -L http://apache.osuosl.org/accumulo/1.5.1/accumulo-1.5.1-bin.tar.gz -o /tmp/acc.tgz && \
+RUN curl -L http://apache.cs.utah.edu/accumulo/1.5.2/accumulo-1.5.2-bin.tar.gz -o /tmp/acc.tgz && \
     tar xzf /tmp/acc.tgz -C /usr/lib && rm -vf /tmp/acc.tgz && id 
-RUN ln -s /usr/lib/accumulo-1.5.1 /usr/lib/accumulo; \
+RUN ln -s /usr/lib/accumulo-1.5.2 /usr/lib/accumulo; \
     mkdir -p /etc/accumulo/conf /var/run/accumulo /var/lib/accumulo /var/log/accumulo; \
     useradd -u 6040 -G hadoop accumulo; \
     chown accumulo.accumulo /var/run/accumulo /var/lib/accumulo /var/log/accumulo; \
