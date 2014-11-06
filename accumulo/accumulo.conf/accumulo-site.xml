@@ -128,7 +128,16 @@
       $HADOOP_PREFIX/share/hadoop/yarn/.*.jar,
       $HADOOP_PREFIX/share/hadoop/hdfs/lib/.*.jar,
       $HADOOP_PREFIX/share/hadoop/mapreduce/lib/.*.jar,
-      $HADOOP_PREFIX/share/hadoop/yarn/lib/.*.jar
+      $HADOOP_PREFIX/share/hadoop/yarn/lib/.*.jar,
+      <!-- adding jar files from /usr/lib/hadoop -->
+      /usr/lib/hadoop/[^.].*.jar,
+      /usr/lib/hadoop/lib/[^.].*.jar,
+      /usr/lib/hadoop-hdfs/[^.].*.jar,
+      /usr/lib/hadoop-hdfs/lib/[^.].*.jar,
+      /usr/lib/hadoop-yarn/[^.].*.jar,
+      /usr/lib/hadoop-yarn/lib/[^.].*.jar,
+      /usr/lib/hadoop-mapreduce/[^.].*.jar,
+      /usr/lib/hadoop-mapreduce/lib/*.jar
     </value>
   </property>
 </configuration>
