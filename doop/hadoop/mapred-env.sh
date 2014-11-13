@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+export JAVA_HOME=/usr
+
 export HADOOP_JOB_HISTORYSERVER_HEAPSIZE=1024
 
 export HADOOP_MAPRED_ROOT_LOGGER=INFO,RFA

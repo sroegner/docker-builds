@@ -2,7 +2,7 @@
     
     <property>
       <name>fs.defaultFS</name>
-      <value>hdfs://namenode:8020</value>
+      <value>hdfs://{{ namenode_hostname }}:8020</value>
     </property>
     
     <property>

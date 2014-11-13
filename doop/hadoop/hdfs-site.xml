@@ -2,57 +2,57 @@
     <configuration>
     <property>
       <name>dfs.namenode.rpc-bind-host</name>
-      <value>0.0.0.0</value>
+      <value>{{ namenode_hostname }}</value>
     </property>
     
     <property>
       <name>dfs.datanode.address</name>
-      <value>0.0.0.0:50010</value>
+      <value>{{ datanode_hostname }}:50010</value>
     </property>
     
     <property>
       <name>dfs.namenode.https-address</name>
-      <value>0.0.0.0:50470</value>
+      <value>{{ namenode_hostname }}:50470</value>
     </property>
     
     <property>
       <name>dfs.datanode.ipc.address</name>
-      <value>0.0.0.0:8010</value>
+      <value>{{ datanode_hostname }}:8010</value>
     </property>
 
     <property>
       <name>dfs.namenode.http-address</name>
-      <value>0.0.0.0:50070</value>
+      <value>{{ namenode_hostname }}:50070</value>
     </property>
     
     <property>
       <name>dfs.namenode.secondary.http-address</name>
-      <value>0.0.0.0:50090</value>
+      <value>{{ namenode_hostname }}:50090</value>
     </property>
     
     <property>
       <name>dfs.datanode.http.address</name>
-      <value>0.0.0.0:50075</value>
+      <value>{{ datanode_hostname }}:50075</value>
     </property>
     
     <property>
       <name>dfs.journalnode.http-address</name>
-      <value>0.0.0.0:8480</value>
+      <value>{{ namenode_hostname }}:8480</value>
     </property>
     
     <property>
       <name>dfs.namenode.name.dir</name>
-      <value>/data1/hdfs/namenode</value>
+      <value>file:///data1/hdfs/namenode</value>
     </property>
     
     <property>
       <name>dfs.namenode.checkpoint.dir</name>
-      <value>/data1/hdfs/namesecondary</value>
+      <value>file:///data1/hdfs/namesecondary</value>
     </property>
     
     <property>
       <name>dfs.datanode.data.dir</name>
-      <value>/data1/hdfs/data</value>
+      <value>file:///data1/hdfs/data</value>
     </property>
     
     <property>

@@ -4,7 +4,8 @@ RUN rm -vf /etc/supervisor/conf.d/hdfs-namenode.conf; \
     rm -vf /etc/supervisor/conf.d/yarn-resourcemanager.conf; \
     rm -vf /etc/supervisor/conf.d/jobhistory.conf; \
     rm -vf /etc/supervisor/conf.d/zookeeper.conf; \
-    rm -vrf /data1/hdfs/name* /data1/hdfs/data/*
+    rm -vf /etc/supervisor/conf.d/dnsmasq.conf; \
+    rm -rf /data1/hdfs/name* /data1/hdfs/data/*
 
 COPY add_node.sh /etc/supervisor/add_node
 COPY add_node.conf /etc/supervisor/conf.d/add_node.conf

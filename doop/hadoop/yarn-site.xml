@@ -2,57 +2,57 @@
     
     <property>
       <name>yarn.resourcemanager.resource-tracker.address</name>
-      <value>namenode:8025</value>
-    </property>
-    
-    <property>
-      <name>yarn.resourcemanager.address</name>
-      <value>namenode:8050</value>
+      <value>{{ namenode_hostname }}:8025</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.scheduler.address</name>
-      <value>namenode:8030</value>
+      <value>{{ namenode_hostname }}:8030</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.address</name>
+      <value>{{ namenode_hostname }}:8032</value>
     </property>
     
     <property>
       <name>yarn.nodemanager.address</name>
-      <value>0.0.0.0:45454</value>
+      <value>{{ datanode_hostname }}:45454</value>
     </property>
     
     <property>
       <name>yarn.nodemanager.webapp.address</name>
-      <value>0.0.0.0:8042</value>
+      <value>{{ datanode_hostname }}:8042</value>
     </property>
 
     <property>
       <name>yarn.timeline-service.webapp.address</name>
-      <value>0.0.0.0:8188</value>
+      <value>{{ namenode_hostname }}:8188</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.webapp.address</name>
-      <value>0.0.0.0:8088</value>
+      <value>{{ namenode_hostname }}:8088</value>
     </property>
     
     <property>
       <name>yarn.timeline-service.address</name>
-      <value>0.0.0.0:10200</value>
+      <value>{{ namenode_hostname }}:10200</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.admin.address</name>
-      <value>0.0.0.0:8141</value>
+      <value>{{ namenode_hostname }}:8141</value>
     </property>
     
     <property>
       <name>yarn.timeline-service.webapp.https.address</name>
-      <value>0.0.0.0:8190</value>
+      <value>{{ namenode_hostname }}:8190</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.hostname</name>
-      <value>namenode</value>
+      <value>{{ namenode_hostname }}</value>
     </property>
     
     <property>
@@ -97,7 +97,7 @@
     
     <property>
       <name>yarn.log.server.url</name>
-      <value>http://namenode:19888/jobhistory/logs</value>
+      <value>http://{{ namenode_hostname }}:19888/jobhistory/logs</value>
     </property>
     
     <property>
@@ -105,7 +105,7 @@
       <value>/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*</value>
     </property>
     
-    <property>
+    <!-- <property>
       <name>yarn.nodemanager.container-executor.class</name>
       <value>org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor</value>
     </property>
@@ -113,6 +113,6 @@
     <property>
       <name>yarn.nodemanager.linux-container-executor.group</name>
       <value>yarn</value>
-    </property>
+    </property> -->
 
 </configuration>

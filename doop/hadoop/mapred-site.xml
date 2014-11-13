@@ -3,12 +3,12 @@
 
     <property>
       <name>mapreduce.jobhistory.address</name>
-      <value>0.0.0.0:10020</value>
+      <value>{{ namenode_hostname }}:10020</value>
     </property>
 
     <property>
       <name>mapreduce.jobhistory.webapp.address</name>
-      <value>0.0.0.0:19888</value>
+      <value>{{ namenode_hostname }}:19888</value>
     </property>
 
     <property>
@@ -18,7 +18,7 @@
 
     <property>
       <name>mapreduce.map.java.opts</name>
-      <value>-Xmx1638m</value>
+      <value>-Xmx768m</value>
     </property>
 
     <property>
@@ -28,7 +28,7 @@
 
     <property>
       <name>mapreduce.reduce.java.opts</name>
-      <value>-Xmx1638m</value>
+      <value>-Xmx768m</value>
     </property>
 
     <property>
@@ -53,12 +53,12 @@
 
     <property>
       <name>mapreduce.map.memory.mb</name>
-      <value>2048</value>
+      <value>1000</value>
     </property>
 
     <property>
       <name>mapreduce.reduce.memory.mb</name>
-      <value>2048</value>
+      <value>1000</value>
     </property>
 
     <property>
@@ -76,9 +76,5 @@
       <value>/user</value>
     </property>
 
-    <property>
-      <name>mapreduce.admin.reduce.child.java.opts</name>
-      <value>-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN</value>
-    </property>
 
 </configuration>

@@ -24,7 +24,7 @@ container:
 	$(DOCKER_CMD) ps 
 
 ssh:
-	ssh $(sshopts) -p 2212 root@$(IP)
+	ssh $(sshopts) -p 2212 root@$$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name))
 
 shell:
 	$(DOCKER_CMD) run -i -t $(tag) /bin/bash
