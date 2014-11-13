@@ -26,7 +26,7 @@
      <param name="Threshold"      value="DEBUG"/>
      <layout class="org.apache.log4j.PatternLayout">
        <param name="ConversionPattern" value="%d{ISO8601} [%-8c{2}] %-5p: %m%n"/>
-     </layout>	    
+     </layout>
   </appender>
 
   <!--  Write out INFO and higher to the regular log -->
@@ -37,13 +37,13 @@
      <param name="Threshold"      value="INFO"/>
      <layout class="org.apache.log4j.PatternLayout">
        <param name="ConversionPattern" value="%d{ISO8601} [%-8c{2}] %-5p: %m%n"/>
-     </layout>	    
+     </layout>
   </appender>
 
   <!-- Send all logging data to a centralized logger -->
   <appender name="N1" class="org.apache.log4j.net.SocketAppender">
      <param name="remoteHost"     value="${org.apache.accumulo.core.host.log}"/>
-     <param name="port"           value="4560"/>
+     <param name="port"           value="${org.apache.accumulo.core.host.log.port}"/>
      <param name="application"    value="${org.apache.accumulo.core.application}:${org.apache.accumulo.core.ip.localhost.hostname}"/>
      <param name="Threshold"      value="WARN"/>
   </appender>
@@ -55,14 +55,10 @@
 
   <!-- Log accumulo events to the debug, normal and remote logs. -->
   <logger name="org.apache.accumulo" additivity="false">
-     <level value="INFO"/>
+     <level value="DEBUG"/>
      <appender-ref ref="A2" />
      <appender-ref ref="A3" />
      <appender-ref ref="ASYNC" />
-  </logger>
-
-  <logger name="org.apache.accumulo.server.security.Auditor">
-     <level value="WARN"/> <!-- change to INFO for authorization events -->
   </logger>
 
   <logger name="org.apache.accumulo.core.file.rfile.bcfile">
@@ -73,7 +69,7 @@
      <level value="WARN"/>
   </logger>
 
-  <logger name="com.yahoo.zookeeper">
+  <logger name="org.apache.zookeeper">
      <level value="ERROR"/>
   </logger>
 

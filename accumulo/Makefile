@@ -1,34 +1,23 @@
-box_name = $(notdir $(CURDIR))
-tag := sroegner/$(box_name)
+dnsdomain := docker.local
+thirdoctet := 40
+include ../shared/Makefile.vars
+hostname_template := $(container_name).$(dnsdomain)
+master_hostname := master-$(hostname_template)
+include ../shared/Makefile
 
 all:
 	echo "Can do 'clean', 'image' or 'container'"
 
-clean:
-	sudo docker stop $(box_name) || :
-	sleep 2
-	sudo docker rm $(box_name) || :
-
 image:	
-	sudo docker build -t=$(tag) .
-	sudo docker run -d --name=accbuild --hostname=namenode -p=127.0.0.10:2244:22 $(tag) /usr/bin/supervisord -n
+	$(DOCKER_CMD) build -t=$(tag) .
+	$(DOCKER_CMD) rm -f $(container_name) || :
+	$(DOCKER_CMD) run -d --name=$(container_name) --hostname=$(master_hostname) -p=127.0.0.10:2244:22 $(tag) /usr/bin/supervisord -n
 	sleep 5
-	ssh -i dotssh/accumulo -p 2244 root@127.0.0.10 /docker/init_accumulo.sh
-	sudo docker commit --author="Steffen Roegner <steffen.roegner@gmail.com>" accbuild $(tag)
-	sudo docker stop accbuild || :
-	sleep 2
-	sudo docker rm accbuild || :
+	ssh -p 2212 $(sshopts) root@$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name)) /var/lib/accumulo/init_accumulo.sh
+	$(DOCKER_CMD) commit --author="Steffen Roegner <steffen.roegner@gmail.com>" $(container_name) $(tag)
+	$(DOCKER_CMD) rm -f $(container_name) || :
 
 container:
-	sudo docker run -d --name=$(box_name) --hostname=namenode -p=127.0.0.10:2244:22 -p=127.0.0.10:2181:2181 -p=127.0.0.10:50070:50070 -p=127.0.0.10:50095:50095 $(tag) /usr/bin/supervisord -n
-	sudo docker ps 
-
-ssh:
-	ssh -i dotssh/accumulo -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 2244 root@127.0.0.10
-
-erase:	clean
-	sudo docker rmi $(tag)
-
-push:
-	sudo docker push $(tag)
+	$(DOCKER_CMD) run -d --hostname=$(master_hostname) --name=$(container_name) $(tag) /usr/bin/supervisord -n
+	echo IP address of $(master_hostname) is $$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name))
 

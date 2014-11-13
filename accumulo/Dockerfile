@@ -1,23 +1,30 @@
 FROM sroegner/doop
+MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
+USER root
 
-RUN curl -L http://apache.osuosl.org/accumulo/1.5.1/accumulo-1.5.1-bin.tar.gz -o /tmp/acc.tgz && \
-    tar xzf /tmp/acc.tgz -C /usr/lib && rm -vf /tmp/acc.tgz && id 
-RUN ln -s /usr/lib/accumulo-1.5.1 /usr/lib/accumulo; \
-    mkdir -p /etc/accumulo/conf /var/run/accumulo /var/lib/accumulo /var/log/accumulo; \
-    useradd -u 6040 -G hadoop accumulo; \
+ENV REFRESHED_AT 2014-11-13
+RUN yum -y -q upgrade
+ENV ACCUMULO_VERSION 1.6.1
+
+RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz | tar xz --no-same-owner -C /usr/lib 
+
+RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
+    useradd -u 6040 -G hadoop -d /var/lib/accumulo accumulo; \
+    mkdir -p /etc/accumulo /var/run/accumulo /var/lib/accumulo/conf /var/log/accumulo; \
+    cp -vr /root/.ssh/ /var/lib/accumulo/; chown -R accumulo.accumulo /var/lib/accumulo/.ssh; \
     chown accumulo.accumulo /var/run/accumulo /var/lib/accumulo /var/log/accumulo; \
-    rm -rf /usr/lib/accumulo/conf; rm -rf /usr/lib/accumulo/logs; \
-    ln -s /etc/accumulo/conf /usr/lib/accumulo/conf; \
+    chmod 700 /var/lib/accumulo/conf; \
+    mv /usr/lib/accumulo/conf /usr/lib/accumulo/conf.dist; \
+    rm -rf /usr/lib/accumulo/logs; \
+    ln -s /var/lib/accumulo/conf /usr/lib/accumulo/conf; \
+    ln -s /var/lib/accumulo/conf /etc/accumulo/conf; \
     ln -s /var/log/accumulo /usr/lib/accumulo/logs; 
     
-ADD . /docker
-ADD accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
-RUN cp -vr /docker/accumulo.conf/* /etc/accumulo/conf/; \
-    mkdir -p /root/.ssh /home/accumulo/.ssh; \
-    chmod 700 /root/.ssh /home/accumulo/.ssh; \
-    cp -vr /docker/dotssh/* /root/.ssh/; \
-    cp -vr /docker/dotssh/* /home/accumulo/.ssh/ ;\
-    chown -R accumulo.accumulo /home/accumulo/.ssh
+COPY accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
+COPY accumulo.conf.templates /var/lib/accumulo/conf.templates/
+COPY supervisord-accumulo.conf /var/lib/accumulo/
+COPY init_accumulo.sh /var/lib/accumulo/
 
+# TODO: add more accumulo ports
 EXPOSE 22 2181 50070 50095 
 CMD ["/usr/bin/supervisord", "-n"]
