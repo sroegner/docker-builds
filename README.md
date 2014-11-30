@@ -38,6 +38,17 @@ will yield
 
 ![alt text](https://github.com/sroegner/docker-builds/raw/master/doop/doop-cluster.png "doop cluster with two datanode containers")
 
+## accumulo
+
+Built on top of doop - provides an easy way to run an Accumulo instance (currently 1.6.1) in docker, will start all accumulo processes in the first (namenode) container:
+
+* master
+* monitor (port 50095)
+* gc
+* tracer
+* tserver
+* proxy (port 42424)
+
 ## nexus
 
 A single Sonatype Nexus java process, no ssh. Good for local maven testing - exposes port 8081.
