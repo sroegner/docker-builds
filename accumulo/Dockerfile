@@ -4,6 +4,7 @@ USER root
 
 ENV REFRESHED_AT 2014-11-13
 RUN yum -y -q upgrade
+RUN yum -y install gcc-c++
 ENV ACCUMULO_VERSION 1.6.1
 
 RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz | tar xz --no-same-owner -C /usr/lib 
@@ -18,13 +19,14 @@ RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
     rm -rf /usr/lib/accumulo/logs; \
     ln -s /var/lib/accumulo/conf /usr/lib/accumulo/conf; \
     ln -s /var/lib/accumulo/conf /etc/accumulo/conf; \
-    ln -s /var/log/accumulo /usr/lib/accumulo/logs; 
+    ln -s /var/log/accumulo /usr/lib/accumulo/logs; \
+    JAVA_HOME=/usr/lib/jvm/java /usr/lib/accumulo/bin/build_native_library.sh
     
 COPY accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
 COPY accumulo.conf.templates /var/lib/accumulo/conf.templates/
 COPY supervisord-accumulo.conf /var/lib/accumulo/
+COPY supervisord-accumulo-tserver.conf /var/lib/accumulo/
 COPY init_accumulo.sh /var/lib/accumulo/
 
-# TODO: add more accumulo ports
-EXPOSE 22 2181 50070 50095 
+EXPOSE 22 50095 9999 9998 9997 42424
 CMD ["/usr/bin/supervisord", "-n"]
