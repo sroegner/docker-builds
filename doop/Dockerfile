@@ -8,8 +8,6 @@ ENV HADOOP_MAPRED_HOME=/usr/lib/hadoop-mapreduce
 ENV HADOOP_YARN_HOME=/usr/lib/hadoop-yarn
 ENV HADOOP_LIBEXEC_DIR=/usr/lib/hadoop/libexec
 
-ENV REFRESHED_AT 2014-09-30
-RUN yum -y -q upgrade
 RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.1-latest/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
     yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client flume zookeeper dnsmasq
     
@@ -18,8 +16,6 @@ RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /data1/flume/spool-dir /var/l
     chown mapred.hadoop /data1/mapred && \
     chown yarn.hadoop /data1/yarn && \
     chown -R flume.flume /data1/flume && \
-    useradd -d /var/lib/hadoop -g hadoop hadoop && \
-    usermod -G hadoop,hdfs yarn
 
 RUN su - hdfs -c "ssh-keygen -q -t dsa -f /var/lib/hadoop-hdfs/.ssh/id_dsa -N '' 2>/dev/null && cat /var/lib/hadoop-hdfs/.ssh/id_dsa.pub >> /var/lib/hadoop-hdfs/.ssh/authorized_keys"; \
     su - mapred -c "ssh-keygen -q -t dsa -f /var/lib/hadoop-mapreduce/.ssh/id_dsa -N '' 2>/dev/null && cat /var/lib/hadoop-mapreduce/.ssh/id_dsa.pub >> /var/lib/hadoop-mapreduce/.ssh/authorized_keys"; \
