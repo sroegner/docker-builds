@@ -2,7 +2,8 @@
 # adding some packages and a jdk all needed in hadoop
 # + openssh server run by supervisor
 
-FROM sroegner/centos-base:6
+#FROM sroegner/centos-base:6
+FROM centos:centos6
 MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
@@ -10,8 +11,12 @@ ENV REFRESHED_AT 2014-10-02
 ENV JAVA_HOME /usr
 ENV JAVA /usr/bin/java
 
+RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+#RUN curl -b oraclelicense=accept-securebackup-cookie -L http://download.oracle.com/otn-pub/java/jdk/7u71-b14/jdk-7u71-linux-x64.rpm -O; \
+#    rpm -ivh jdk-7u71-linux-x64.rpm && rm -rf jdk-7u71-linux-x64.rpm
+
 RUN yum -y -q upgrade; \
-    yum -y install openssl snappy snappy-devel lzo lzo-devel unzip sudo telnet curl python-pip openssh-server rsync which tar git bind-utils tcpdump strace java-1.7.0-openjdk-devel.x86_64 passwd; \
+    yum -y install python-pip openssl snappy snappy-devel lzo lzo-devel unzip sudo telnet openssh-server rsync which tar git bind-utils passwd java-1.7.0-openjdk-devel; \
     yum clean all; \
     pip install supervisor 
 
