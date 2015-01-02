@@ -13,7 +13,7 @@ image:	clean
 	$(DOCKER_CMD) run -d --name=$(container_name) --hostname=$(master_hostname) -p=127.0.0.10:2212:2212 $(tag) /usr/bin/supervisord -n
 	sleep 5
 	$(DOCKER_CMD) exec $(container_name) ps -ef
-	ssh -p 2212 $(sshopts) root@127.0.0.10 /var/lib/accumulo/init_accumulo.sh
+	$(DOCKER_CMD) exec $(container_name) /var/lib/accumulo/init_accumulo.sh
 	$(DOCKER_CMD) commit --author="Steffen Roegner <steffen.roegner@gmail.com>" $(container_name) $(tag)
 	$(DOCKER_CMD) rm -f $(container_name) || :
 

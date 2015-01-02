@@ -2,8 +2,6 @@ FROM sroegner/doop
 MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
-ENV REFRESHED_AT 2014-11-13
-RUN yum -y -q upgrade
 RUN yum -y install gcc-c++
 ENV ACCUMULO_VERSION 1.6.1
 
@@ -28,5 +26,5 @@ COPY supervisord-accumulo.conf /var/lib/accumulo/
 COPY supervisord-accumulo-tserver.conf /var/lib/accumulo/
 COPY init_accumulo.sh /var/lib/accumulo/
 
-EXPOSE 22 50095 9999 9998 9997 42424
+EXPOSE 50095 9999 9998 9997 42424
 CMD ["/usr/bin/supervisord", "-n"]
