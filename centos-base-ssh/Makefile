@@ -1,7 +1,6 @@
 hostname := centos-base
-thirdoctet := 11
 include ../shared/Makefile.vars
-tag := "$(reg)/$(box_name):6"
+tag := "$(reg)/$(box_name):7"
 include ../shared/Makefile
 
 image:

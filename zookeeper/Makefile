@@ -1,5 +1,5 @@
 hostname := centos-base
-thirdoctet := 28
+
 include ../shared/Makefile.vars
 include ../shared/Makefile
 

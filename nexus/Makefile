@@ -1,5 +1,5 @@
 hostname := nexus
-thirdoctet := 29
+
 include ../shared/Makefile.vars
 include ../shared/Makefile
 

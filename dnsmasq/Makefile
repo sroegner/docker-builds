@@ -1,5 +1,5 @@
 hostname := dnsmasq
-thirdoctet := 24
+
 include ../shared/Makefile.vars
 include ../shared/Makefile
 

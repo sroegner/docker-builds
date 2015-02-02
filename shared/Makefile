@@ -14,17 +14,13 @@ push:
 
 container:
 	$(DOCKER_CMD) run -d --name=$(container_name) $(volumes) \
-			--hostname=$(hostname) \
-			--publish=$(IP):2212:2212 \
-			--publish=$(IP):80:80 \
-			--publish=$(IP):443:443 \
-			--publish=$(IP):3000:3000 \
-			--cidfile=$(CIDFILE) \
-			$(tag) /usr/bin/supervisord -n
-	$(DOCKER_CMD) ps 
+			--hostname=$(hostname) $(tag) /usr/bin/supervisord -n
 
 ssh:
-	ssh $(sshopts) -p 2212 root@$$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name))
+	ssh $(sshopts) root@$$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name))
+
+exec:
+	$(DOCKER_CMD) exec -i -t $(container_name) /bin/bash
 
 shell:
 	$(DOCKER_CMD) run -i -t $(tag) /bin/bash

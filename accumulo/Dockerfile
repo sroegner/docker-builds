@@ -22,9 +22,8 @@ RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
     
 COPY accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
 COPY accumulo.conf.templates /var/lib/accumulo/conf.templates/
-COPY supervisord-accumulo.conf /var/lib/accumulo/
-COPY supervisord-accumulo-tserver.conf /var/lib/accumulo/
-COPY init_accumulo.sh /var/lib/accumulo/
+COPY accumulo-group.conf /etc/supervisor/conf.d/
+COPY bootstrap-node.sh /usr/local/sbin/
 
 EXPOSE 50095 9999 9998 9997 42424
 CMD ["/usr/bin/supervisord", "-n"]

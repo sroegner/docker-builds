@@ -5,8 +5,9 @@
 FROM sroegner/centos-base-ssh
 MAINTAINER Steffen Roegner 'steffen.roegner@gmail.com'
 
-ENV CONSUL_VERSION 0.4.0
+ENV CONSUL_VERSION 0.4.1
 
+RUN yum -y install unzip
 RUN mkdir -p /var/log/consul /etc/consul /var/lib/consul/data /var/lib/consul/ui /var/lib/consul/scripts && \
     curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_linux_amd64.zip -o /tmp/c.zip && \
     curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_web_ui.zip -o /tmp/ui.zip && \

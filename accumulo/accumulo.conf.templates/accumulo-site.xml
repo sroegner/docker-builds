@@ -23,7 +23,7 @@
 
   <property>
     <name>instance.zookeeper.host</name>
-    <value>{{ master_hostname }}:2181</value>
+    <value>{{ namenode_hostname }}:2181</value>
     <description>comma separated list of zookeeper servers</description>
   </property>
 

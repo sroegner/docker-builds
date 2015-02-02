@@ -52,7 +52,7 @@
     
     <property>
       <name>dfs.datanode.data.dir</name>
-      <value>file:///data1/hdfs/data</value>
+      <value>file:///data1/hdfs/datanode</value>
     </property>
     
     <property>

@@ -1,15 +1,5 @@
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0
-
-pathmunge () {
-        if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
-           if [ "$2" = "after" ] ; then
-              PATH=$PATH:$1
-           else
-              PATH=$1:$PATH
-           fi
-        fi
-}
-
-pathmunge /usr/lib/hadoop/bin
-pathmunge /usr/lib/accumulo/bin
-pathmunge /usr/lib/zookeeper/bin
+if [ -x /usr/lib/accumulo/bin/accumulo ]
+then
+  export ACCUMULO_HOME=/usr/lib/accumulo
+  export PATH=$PATH:$ACCUMULO_HOME/bin
+fi
