@@ -15,7 +15,6 @@ push:
 container:
 	$(DOCKER_CMD) run -d --name=$(container_name) $(volumes) \
 			--hostname=$(hostname) $(tag) /usr/bin/supervisord -n
-
 ssh:
 	ssh $(sshopts) root@$$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name))
 
