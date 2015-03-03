@@ -42,7 +42,7 @@ cluster-noquorum4:
 	sudo docker run -d --link=agent1:peer --env='SRV_ARGS=-join=peer' --name=agent2 --hostname=agent2 -p=127.0.0.24:2212:2212 -p=127.0.0.24:8500:8500 $(tag) /usr/bin/supervisord -n
 
 server1:
-	ssh $(sshopts) -p 2212 root@127.0.0.20
+	ssh $(sshopts) root@$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' server1)
 
 agent1:
-	ssh $(sshopts) -p 2212 root@127.0.0.23
+	ssh $(sshopts) root@$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' agent1)

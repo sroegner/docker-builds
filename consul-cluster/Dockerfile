@@ -2,10 +2,10 @@
 # adding some essential packages and a jdk
 # ready openssh server
 
-FROM sroegner/centos-base-ssh
+FROM sroegner/centos-base-ssh:7
 MAINTAINER Steffen Roegner 'steffen.roegner@gmail.com'
 
-ENV CONSUL_VERSION 0.4.1
+ENV CONSUL_VERSION 0.5.0
 
 RUN yum -y install unzip
 RUN mkdir -p /var/log/consul /etc/consul /var/lib/consul/data /var/lib/consul/ui /var/lib/consul/scripts && \
