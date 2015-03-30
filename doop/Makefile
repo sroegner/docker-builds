@@ -7,47 +7,15 @@ include ../shared/Makefile
 image:	
 	cp -rv ../shared/config.zk $(CURDIR)/conf.zk
 	$(DOCKER_CMD) build -t=$(tag) .
-	$(DOCKER_CMD) run --hostname=namenode --env="JAVA_HOME=/usr" $(tag) /etc/hadoop/conf.templates/format-namenode.sh
-	$(DOCKER_CMD) commit --author="Steffen Roegner <steffen.roegner@gmail.com>" $$($(DOCKER_CMD) ps -l -q) $(tag)
 
-container:
-	$(DOCKER_CMD) run --user=root -d \
-			--name=$(container_name) \
-			--hostname=namenode-$(hostname_template) \
-			$(tag) /usr/bin/supervisord -n
-
-container-dnode1:
-	$(DOCKER_CMD) run --user=root -d \
-			--link=$(container_name):namenode-$(hostname_template) \
-			--name=$(container_name)-dnode1 \
-			--hostname=dnode1-$(hostname_template) \
-			$(tag) /usr/bin/supervisord -n
-
-container-dnode2:
-	$(DOCKER_CMD) run --user=root -d \
-			--link=$(container_name):namenode-$(hostname_template) \
-			--name=$(container_name)-dnode2 \
-			--hostname=dnode2-$(hostname_template) \
-			$(tag) /usr/bin/supervisord -n
-
-container-dnode3:
-	$(DOCKER_CMD) run --user=root -d \
-			--link=$(container_name):namenode-$(hostname_template) \
-			--name=$(container_name)-dnode3 \
-			--hostname=dnode3-$(hostname_template) \
-			$(tag) /usr/bin/supervisord -n
-
-container-dnode4:
-	$(DOCKER_CMD) run --user=root -d \
-			--link=$(container_name):namenode-$(hostname_template) \
-			--name=$(container_name)-dnode4 \
-			--hostname=dnode4-$(hostname_template) \
-			$(tag) /usr/bin/supervisord -n
+cluster:
+	$(DOCKER_CMD) run -d --name=consul-leader --hostname=consul.doop-cluster.local $(tag) /usr/sbin/consul agent -server -bootstrap-expect=1 -data-dir=/var/lib/consul/data -config-dir=/etc/consul-leader
+	$(DOCKER_CMD) run -d --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=namenode,secondarynamenode" --name=$(container_name) --hostname=namenode-$(hostname_template) --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	$(DOCKER_CMD) run -d --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode" --name=$(container_name)-dn0 --hostname=dn0-$(hostname_template) --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 
 clean:
-	sudo docker rm -f $(container_name)-dnode1 || :
-	sudo docker rm -f $(container_name)-dnode2 || :
-	sudo docker rm -f $(container_name)-dnode3 || :
-	sudo docker rm -f $(container_name)-dnode4 || :
+	sudo docker rm -f consul-leader || :
+	sudo docker rm -f $(container_name)-dn0 || :
+	sudo docker rm -f $(container_name)-dn1 || :
 	sudo docker rm -f $(container_name) || :
 

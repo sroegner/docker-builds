@@ -1,0 +1,15 @@
+{
+  "services": [
+    {
+      "id": "namenode",
+      "name": "namenode",
+      "port": 50070
+    },
+    {
+      "id": "secondarynamenode",
+      "name": "secondarynamenode",
+      "port": 50090
+    }
+  ]
+}
+

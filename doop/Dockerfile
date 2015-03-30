@@ -1,39 +1,49 @@
-FROM sroegner/centos-base-ssh:7
+FROM centos:7
 MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
-ENV HADOOP_HOME=/usr/lib/hadoop
-ENV HADOOP_HDFS_HOME=/usr/lib/hadoop-hdfs
-ENV HADOOP_MAPRED_HOME=/usr/lib/hadoop-mapreduce
-ENV HADOOP_YARN_HOME=/usr/lib/hadoop-yarn
-ENV HADOOP_LIBEXEC_DIR=/usr/lib/hadoop/libexec
+ENV JAVA_HOME=/usr
+ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
+ENV HADOOP_HDFS_HOME=/usr/hdp/current/hadoop-hdfs-client
+ENV HADOOP_MAPRED_HOME=/usr/hdp/current/hadoop-mapreduce-client
+ENV HADOOP_YARN_HOME=/usr/hdp/current/hadoop-yarn-client
+ENV HADOOP_LIBEXEC_DIR=/usr/hdp/current/hadoop-client/libexec
+ENV CONSUL_VERSION=0.5.0
 
-RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.1-latest/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
-    yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client flume zookeeper dnsmasq
+ENV REFRESHED_AT 2015-03-29
+
+RUN rpm -ivh http://epel.mirror.constant.com/7/x86_64/e/epel-release-7-5.noarch.rpm; \
+    yum -y -q upgrade; \
+    yum -y install python-pip snappy lzo rsync which tar bind-utils java-1.7.0-openjdk-devel unzip; \
+    yum clean all; \
+    pip install supervisor 
+
+RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.2.0.0/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
+    yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client zookeeper 
     
-RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /data1/flume/spool-dir /var/log/hadoop; \
+RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /var/log/hadoop /var/log/supervisor /var/log/consul /var/lib/consul/data /var/lib/consul/ui /etc/consul /etc/consul-server; \
     chown hdfs.hadoop /data1/hdfs && \
     chown mapred.hadoop /data1/mapred && \
-    chown yarn.hadoop /data1/yarn
+    chown yarn.hadoop /data1/yarn; \
+    chmod 775 /var/log/hadoop; chgrp hadoop /var/log/hadoop; \
+    curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_linux_amd64.zip -o /tmp/c.zip && \
+    curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_web_ui.zip -o /tmp/ui.zip && \
+    unzip /tmp/c.zip -d /usr/sbin && \
+    unzip /tmp/ui.zip -d /var/lib/consul/ui
 
-RUN ssh-keygen -q -t dsa -b 1024 -N '' -f /root/.ssh/id_dsa 2>/dev/null; \
-    cat /root/.ssh/id_dsa.pub > /root/.ssh/authorized_keys; \
-    chmod 600 /root/.ssh/authorized_keys
-
-RUN su - hdfs -c "ssh-keygen -q -t dsa -f /var/lib/hadoop-hdfs/.ssh/id_dsa -N '' 2>/dev/null && cat /var/lib/hadoop-hdfs/.ssh/id_dsa.pub >> /var/lib/hadoop-hdfs/.ssh/authorized_keys"; \
-    su - mapred -c "ssh-keygen -q -t dsa -f /var/lib/hadoop-mapreduce/.ssh/id_dsa -N '' 2>/dev/null && cat /var/lib/hadoop-mapreduce/.ssh/id_dsa.pub >> /var/lib/hadoop-mapreduce/.ssh/authorized_keys"; \
-    su - yarn -c "ssh-keygen -q -t dsa -f /var/lib/hadoop-yarn/.ssh/id_dsa -N '' 2>/dev/null && cat /var/lib/hadoop-yarn/.ssh/id_dsa.pub >> /var/lib/hadoop-yarn/.ssh/authorized_keys"
-
-    
-COPY hadoop /etc/hadoop/conf.templates/
+COPY supervisord.conf /etc/
+COPY hadoop /etc/hadoop/conf
 COPY conf.zk/zookeeper-env.sh /etc/zookeeper/conf/
 COPY conf.zk/zoo.cfg /etc/zookeeper/conf/
-COPY hadoop-group.conf /etc/supervisor/conf.d/
+COPY check_hadoop.sh /usr/local/sbin/
 COPY bootstrap-node.conf /etc/supervisor/conf.d/
-COPY dnsmasq.conf /etc/
-COPY run_namenode.sh /etc/supervisor/
 COPY bootstrap-node.sh /usr/local/sbin/
-# EXPOSE 53 8010 8020 50010 50020 50070 50075 43130 2181 8025 8030 8042 8050 8141 8088 8188 10200 19888 
+COPY hadoop-group.conf /etc/supervisor/conf.d/
+COPY consul/consul.conf /etc/supervisor/conf.d/
+COPY consul /etc/consul/
+COPY consul/consul.json /etc/consul-leader/
 
-CMD ["/usr/bin/supervisord", "-n"]
-
+USER hdfs
+RUN HADOOP_ROOT_LOGGER="WARN,console" /usr/bin/hdfs namenode -format
+USER root
+VOLUME /etc/hadoop/conf
