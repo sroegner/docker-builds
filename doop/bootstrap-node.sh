@@ -6,6 +6,11 @@ then
   services=(${SVCLIST//,/ })
   for svc in "${services[@]}"
   do
+    svccheck=/etc/consul/services/${svc}_service.json
+    [ -f $svccheck ] && cp $svccheck /etc/consul
     supervisorctl start $svc
   done
 fi
+
+supervisorctl restart consul
+
