@@ -3,12 +3,35 @@
     {
       "id": "namenode",
       "name": "namenode",
-      "port": 50070
+      "port": 50070,
+      "check": {
+        "id": "namenode http service",
+        "http": "http://localhost:50070",
+        "interval": "10s",
+        "timeout": "1s"
+      }
     },
     {
       "id": "secondarynamenode",
       "name": "secondarynamenode",
-      "port": 50090
+      "port": 50090,
+      "check": {
+        "id": "Secondary namenode http service",
+        "http": "http://localhost:50090",
+        "interval": "10s",
+        "timeout": "1s"
+      }
+    },
+    {
+      "id": "datanode",
+      "name": "datanode",
+      "port": 50075,
+      "check": {
+        "id": "Datanode http service",
+        "http": "http://localhost:50075",
+        "interval": "10s",
+        "timeout": "1s"
+      }
     }
   ]
 }
