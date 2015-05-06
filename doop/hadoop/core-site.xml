@@ -63,6 +63,6 @@
   </property>
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://namenode.service.doop.local:8020</value>
+    <value>hdfs://namenode.node.doop.local:8020</value>
   </property>
 </configuration>
