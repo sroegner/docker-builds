@@ -29,7 +29,7 @@
 ###
 if [ -z "$HADOOP_HOME" ]
 then
-   test -z "$HADOOP_PREFIX"      && export HADOOP_PREFIX=/usr/lib/hadoop
+   test -z "$HADOOP_PREFIX"      && export HADOOP_PREFIX=/usr/hdp/current/hadoop-client
 else
    HADOOP_PREFIX="$HADOOP_HOME"
    unset HADOOP_HOME
@@ -41,7 +41,7 @@ fi
 test -z "$HADOOP_CONF_DIR"     && export HADOOP_CONF_DIR="/etc/hadoop/conf"
 
 test -z "$JAVA_HOME"             && export JAVA_HOME=/usr
-test -z "$ZOOKEEPER_HOME"        && export ZOOKEEPER_HOME=/usr/lib/zookeeper
+test -z "$ZOOKEEPER_HOME"        && export ZOOKEEPER_HOME=/usr/hdp/current/zookeeper-client
 test -z "$ACCUMULO_LOG_DIR"      && export ACCUMULO_LOG_DIR=$ACCUMULO_HOME/logs
 if [ -f ${ACCUMULO_CONF_DIR}/accumulo.policy ]
 then

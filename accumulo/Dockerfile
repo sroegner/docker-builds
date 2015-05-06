@@ -2,8 +2,8 @@ FROM sroegner/doop
 MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
-RUN yum -y install gcc-c++
-ENV ACCUMULO_VERSION 1.6.1
+RUN rpmdb --rebuilddb; yum -y install gcc-c++
+ENV ACCUMULO_VERSION 1.6.2
 
 RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz | tar xz --no-same-owner -C /usr/lib 
 
@@ -21,9 +21,11 @@ RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
     JAVA_HOME=/usr/lib/jvm/java /usr/lib/accumulo/bin/build_native_library.sh
     
 COPY accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
-COPY accumulo.conf.templates /var/lib/accumulo/conf.templates/
+COPY accumulo.conf /var/lib/accumulo/conf
 COPY accumulo-group.conf /etc/supervisor/conf.d/
-COPY bootstrap-node.sh /usr/local/sbin/
+COPY init_accumulo.sh /usr/lib/accumulo/bin/
+RUN  chown accumulo.accumulo /var/lib/accumulo/conf
+#COPY bootstrap-node.sh /usr/local/sbin/
 
 EXPOSE 50095 9999 9998 9997 42424
 CMD ["/usr/bin/supervisord", "-n"]
