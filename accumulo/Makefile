@@ -19,15 +19,17 @@ container:
 
 cluster:
 	$(DOCKER_CMD) run -d --name=consul-leader --hostname=consul $(tag) /usr/sbin/consul agent -server -bootstrap-expect=1 -data-dir=/var/lib/consul/data -config-dir=/etc/consul-leader
-	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=namenode --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=namenode,secondarynamenode" --name=$(container_name) --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=namenode --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=namenode,secondarynamenode,datanode" --name=$(container_name) --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 	sleep 1
 	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=resourcemanager --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=resourcemanager" --name=$(container_name)-rm --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
-	sleep 1
-	dig @$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader) namenode.node.doop.local ANY
-	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=master --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=zookeeper" --name=$(container_name)-master --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
-	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=datanode0 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager" --name=$(container_name)-dn0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
-	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=datanode1 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager" --name=$(container_name)-dn1 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=zookeeper --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=zookeeper" --name=$(container_name)-zk0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	sleep 30
+	$(DOCKER_CMD) exec $(container_name) ps -fC java
+	$(DOCKER_CMD) exec $(container_name) /usr/lib/accumulo/bin/init_accumulo.sh
+	#dig @$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader) namenode.node.doop.local ANY
+#	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=master --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=zookeeper" --name=$(container_name)-master --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+#	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=datanode0 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager" --name=$(container_name)-dn0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+#	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=datanode1 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager" --name=$(container_name)-dn1 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 
 clean:
 	sudo docker rm -f consul-leader || :
