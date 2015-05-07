@@ -26,16 +26,14 @@ cluster:
 	sleep 30
 	$(DOCKER_CMD) exec $(container_name) ps -fC java
 	$(DOCKER_CMD) exec $(container_name) /usr/lib/accumulo/bin/init_accumulo.sh
-	#dig @$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader) namenode.node.doop.local ANY
-#	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=master --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=zookeeper" --name=$(container_name)-master --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
-#	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=datanode0 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager" --name=$(container_name)-dn0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
-#	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=datanode1 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager" --name=$(container_name)-dn1 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=tserver0 --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager,accumulo-tserver" --name=$(container_name)-tserver0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=master --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=accumulo-master,accumulo-monitor,accumulo-gc,accumulo-tracer" --name=$(container_name)-master --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 
 clean:
 	sudo docker rm -f consul-leader || :
 	sudo docker rm -f $(container_name)-zk0 || :
 	sudo docker rm -f $(container_name)-rm || :
-	sudo docker rm -f $(container_name)-dn0 || :
+	sudo docker rm -f $(container_name)-tserver0 || :
 	sudo docker rm -f $(container_name)-dn1 || :
 	sudo docker rm -f $(container_name)-master || :
 	sudo docker rm -f $(container_name) || :
