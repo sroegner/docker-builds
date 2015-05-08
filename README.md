@@ -34,6 +34,9 @@ Built on top of doop - provides an easy way to run an Accumulo cluster (currentl
 The choice of node distribution is relatively free as long as there are semantically named hosts (containers) for namenode and zookeeper.
 The Makefile is the easiest way to understand the idea of how this works - specifically the _cluster_ target in both - doop and accumulo.
 
+In addition to initialization the `make cluster` command will also create the example user bob with rights to create tables as described in the Accumulo manual.
+You can use `make accumulo-shell` and `make accumulo-rootshell` to login.
+
 ## nexus
 
 A single Sonatype Nexus java process, no ssh. Good for local maven testing - exposes port 8081.
