@@ -24,30 +24,15 @@ Just runs a single zookeeper process, no ssh.
 
 ## doop
 
-Fully configured HDP-2.1 namenode (runs sshd, namenode, secondarynamenode, resourcemanager, nodemanager, jobhistory and zookeeper via supervisor). The processes can be restarted via supervisorctl, the setup is ready to run map/reduce jobs.
-
-### additional data nodes
-
-The additional doop-datanode image allows attachment of multiple additional datanode/nodemanager containers.
-
-    make container
-    make container-dnode1
-    make container-dnode2
-
-will yield 
-
-![alt text](https://github.com/sroegner/docker-builds/raw/master/doop/doop-cluster.png "doop cluster with two datanode containers")
+Fully configured Hortonworks HDP-2.2 (Hadoop 2.6) cluster on CentOS 7. Nodes (containers) are started from one and the same image, with the SVCLIST environment variable controlling which services should run in each container.
+Uses a dedicated consul.io container (started first) node discovery, service checks and dns. All (except the consul master) containers use supervisor to startup the consul agent and the listed services.
+There is no sshd - all ops interaction uses _docker exec_.
 
 ## accumulo
 
-Built on top of doop - provides an easy way to run an Accumulo instance (currently 1.6.1) in docker, will start all accumulo processes in the first (namenode) container:
-
-* master
-* monitor (port 50095)
-* gc
-* tracer
-* tserver
-* proxy (port 42424)
+Built on top of doop - provides an easy way to run an Accumulo cluster (currently 1.6.2) in docker.
+The choice of node distribution is relatively free as long as there are semantically named hosts (containers) for namenode and zookeeper.
+The Makefile is the easiest way to understand the idea of how this works - specifically the _cluster_ target in both - doop and accumulo.
 
 ## nexus
 

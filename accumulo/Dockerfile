@@ -23,7 +23,9 @@ RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
 COPY accumulo_profile.sh /etc/profile.d/accumulo_profile.sh
 COPY accumulo.conf /var/lib/accumulo/conf
 COPY init_accumulo.sh /usr/lib/accumulo/bin/
+COPY add_user.sh /tmp/
 COPY supervisor/ /etc/supervisor/conf.d/
+COPY consul /etc/consul/
 RUN  chown accumulo.accumulo /var/lib/accumulo/conf
 #COPY bootstrap-node.sh /usr/local/sbin/
 

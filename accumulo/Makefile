@@ -23,30 +23,32 @@ cluster:
 	sleep 1
 	$(DOCKER_CMD) run -d --dns-search=node.doop.local --hostname=resourcemanager.node.doop.local --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=resourcemanager" --name=$(container_name)-rm --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 	$(DOCKER_CMD) run -d --dns-search=node.doop.local --hostname=zookeeper.node.doop.local --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=zookeeper" --name=$(container_name)-zk0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
-	sleep 30
-	$(DOCKER_CMD) exec $(container_name) ps -fC java
+	sleep 20
 	$(DOCKER_CMD) exec $(container_name) /usr/lib/accumulo/bin/init_accumulo.sh
 	$(DOCKER_CMD) run -d --dns-search=node.doop.local --hostname=tserver0.node.doop.local --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager,accumulo-tserver" --name=$(container_name)-tserver0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 	$(DOCKER_CMD) run -d --dns-search=node.doop.local --hostname=tserver1.node.doop.local --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=datanode,nodemanager,accumulo-tserver" --name=$(container_name)-tserver1 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 	$(DOCKER_CMD) run -d --dns-search=node.doop.local --hostname=master.node.doop.local --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=accumulo-master,accumulo-monitor,accumulo-gc,accumulo-tracer" --name=$(container_name)-master --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	$(DOCKER_CMD) run -d --dns-search=node.doop.local --hostname=proxy.node.doop.local --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=accumulo-proxy" --name=$(container_name)-proxy --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
+	sleep 20
+	$(DOCKER_CMD) exec $(container_name)-tserver0 /tmp/add_user.sh
 	echo http://$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' $(container_name)-master):50095
 
 clean:
-	sudo docker rm -f consul-leader || :
-	sudo docker rm -f $(container_name)-zk0 || :
-	sudo docker rm -f $(container_name)-rm || :
-	sudo docker rm -f $(container_name)-tserver0 || :
-	sudo docker rm -f $(container_name)-tserver1 || :
-	sudo docker rm -f $(container_name)-master || :
-	sudo docker rm -f $(container_name) || :
+	$(DOCKER_CMD) rm -f consul-leader || :
+	$(DOCKER_CMD) rm -f $(container_name)-proxy || :
+	$(DOCKER_CMD) rm -f $(container_name)-zk0 || :
+	$(DOCKER_CMD) rm -f $(container_name)-rm || :
+	$(DOCKER_CMD) rm -f $(container_name)-tserver0 || :
+	$(DOCKER_CMD) rm -f $(container_name)-tserver1 || :
+	$(DOCKER_CMD) rm -f $(container_name)-master || :
+	$(DOCKER_CMD) rm -f $(container_name) || :
 
 exec-consul:
 	$(DOCKER_CMD) exec -i -t consul-leader /bin/bash
 
-exec-dn0:
-	$(DOCKER_CMD) exec -i -t $(container_name)-dn0 /bin/bash
+accumulo-rootshell:
+	$(DOCKER_CMD) exec -it $(container_name)-tserver0 su - accumulo -c "/usr/lib/accumulo/bin/accumulo shell -u root -p DOCKERDEFAULT"
 
-exec-dn1:
-	$(DOCKER_CMD) exec -i -t $(container_name)-dn1 /bin/bash
-
+accumulo-shell:
+	$(DOCKER_CMD) exec -it $(container_name)-tserver0 su - accumulo -c "/usr/lib/accumulo/bin/accumulo shell -u bob -p robert"
 

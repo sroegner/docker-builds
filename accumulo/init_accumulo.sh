@@ -11,6 +11,4 @@ EOF
 
 echo "Initializing Accumulo"
 su - accumulo -c '/usr/lib/accumulo/bin/accumulo init --instance-name accumulo --password DOCKERDEFAULT'
-#mv /var/lib/accumulo/supervisord-accumulo.conf /etc/supervisor/conf.d/accumulo.conf
-#mv /var/lib/accumulo/supervisord-accumulo-tserver.conf /etc/supervisor/conf.d/accumulo-tserver.conf
 
