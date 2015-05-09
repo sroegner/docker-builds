@@ -10,7 +10,6 @@ RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACC
 RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
     useradd -u 6040 -G hadoop -d /var/lib/accumulo accumulo; \
     mkdir -p /etc/accumulo /var/lib/accumulo/conf /var/log/accumulo; \
-    cp -vr /root/.ssh/ /var/lib/accumulo/; chown -R accumulo.accumulo /var/lib/accumulo/.ssh; \
     chown accumulo.accumulo /var/lib/accumulo /var/log/accumulo; \
     mv /usr/lib/accumulo/conf /usr/lib/accumulo/conf.dist; \
     rm -rf /usr/lib/accumulo/logs; \
