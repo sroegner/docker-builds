@@ -9,10 +9,9 @@ RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACC
 
 RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
     useradd -u 6040 -G hadoop -d /var/lib/accumulo accumulo; \
-    mkdir -p /etc/accumulo /var/run/accumulo /var/lib/accumulo/conf /var/log/accumulo; \
+    mkdir -p /etc/accumulo /var/lib/accumulo/conf /var/log/accumulo; \
     cp -vr /root/.ssh/ /var/lib/accumulo/; chown -R accumulo.accumulo /var/lib/accumulo/.ssh; \
-    chown accumulo.accumulo /var/run/accumulo /var/lib/accumulo /var/log/accumulo; \
-    chmod 700 /var/lib/accumulo/conf; \
+    chown accumulo.accumulo /var/lib/accumulo /var/log/accumulo; \
     mv /usr/lib/accumulo/conf /usr/lib/accumulo/conf.dist; \
     rm -rf /usr/lib/accumulo/logs; \
     ln -s /var/lib/accumulo/conf /usr/lib/accumulo/conf; \
@@ -26,8 +25,9 @@ COPY init_accumulo.sh /usr/lib/accumulo/bin/
 COPY add_user.sh /tmp/
 COPY supervisor/ /etc/supervisor/conf.d/
 COPY consul /etc/consul/
-RUN  chown accumulo.accumulo /var/lib/accumulo/conf
-#COPY bootstrap-node.sh /usr/local/sbin/
 
-EXPOSE 50095 9999 9998 9997 42424
+RUN  chown -R accumulo.accumulo /var/lib/accumulo/conf; \
+     chmod 700 /var/lib/accumulo/conf
+
 CMD ["/usr/bin/supervisord", "-n"]
+
