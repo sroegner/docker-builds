@@ -8,7 +8,8 @@ ENV HADOOP_HDFS_HOME=/usr/hdp/current/hadoop-hdfs-client
 ENV HADOOP_MAPRED_HOME=/usr/hdp/current/hadoop-mapreduce-client
 ENV HADOOP_YARN_HOME=/usr/hdp/current/hadoop-yarn-client
 ENV HADOOP_LIBEXEC_DIR=/usr/hdp/current/hadoop-client/libexec
-ENV CONSUL_VERSION=0.5.0
+ENV CONSUL_VERSION=0.5.1
+ENV CONFD_VERSION=0.9.0
 
 ENV REFRESHED_AT 2015-03-29
 
@@ -27,11 +28,12 @@ RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /var/log/hadoop /var/log/hado
     chown yarn.hadoop /data1/yarn; \
     chown zookeeper.hadoop /var/lib/zookeeper; \
     chmod 775 /var/log/hadoop; chgrp hadoop /var/log/hadoop; \
-    curl -L https://github.com/kelseyhightower/confd/releases/download/v0.9.0/confd-0.9.0-linux-amd64 -o /usr/sbin/confd && \
+    curl -L https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 -o /usr/sbin/confd && \
     curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_linux_amd64.zip -o /tmp/c.zip && \
     curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_web_ui.zip -o /tmp/ui.zip && \
     unzip /tmp/c.zip -d /usr/sbin && \
     unzip /tmp/ui.zip -d /var/lib/consul/ui && \
+    mkdir -p /etc/confd/templates /etc/confd/conf.d && \
     chmod 755 /usr/sbin/confd
 
 COPY supervisord.conf /etc/
