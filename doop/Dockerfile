@@ -27,10 +27,12 @@ RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /var/log/hadoop /var/log/hado
     chown yarn.hadoop /data1/yarn; \
     chown zookeeper.hadoop /var/lib/zookeeper; \
     chmod 775 /var/log/hadoop; chgrp hadoop /var/log/hadoop; \
+    curl -L https://github.com/kelseyhightower/confd/releases/download/v0.9.0/confd-0.9.0-linux-amd64 -o /usr/sbin/confd && \
     curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_linux_amd64.zip -o /tmp/c.zip && \
     curl -L https://dl.bintray.com/mitchellh/consul/${CONSUL_VERSION}_web_ui.zip -o /tmp/ui.zip && \
     unzip /tmp/c.zip -d /usr/sbin && \
-    unzip /tmp/ui.zip -d /var/lib/consul/ui
+    unzip /tmp/ui.zip -d /var/lib/consul/ui && \
+    chmod 755 /usr/sbin/confd
 
 COPY supervisord.conf /etc/
 COPY hadoop /etc/hadoop/conf
