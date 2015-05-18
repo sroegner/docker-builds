@@ -5,6 +5,7 @@ RUN rpm -ivh http://epel.mirror.constant.com/7/x86_64/e/epel-release-7-5.noarch.
     yum -y install java-1.8.0-openjdk-devel
 RUN yum -y install https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.5.2.noarch.rpm; \
     /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head; \
+    /usr/share/elasticsearch/bin/plugin -install elasticsearch/marvel/latest; \
     usermod -s /usr/bin/bash elasticsearch
 
 USER elasticsearch
