@@ -19,12 +19,12 @@ cluster:
 	$(DOCKER_CMD) run -d --dns-search=doop.local --hostname=zookeeper --dns="$$($(DOCKER_CMD) inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leader)" -e="SVCLIST=zookeeper" --name=$(container_name)-zk0 --link=consul-leader:consul-leader $(tag) /usr/bin/supervisord -n
 
 clean:
-	sudo docker rm -f consul-leader || :
-	sudo docker rm -f $(container_name)-zk0 || :
-	sudo docker rm -f $(container_name)-rm || :
-	sudo docker rm -f $(container_name)-dn0 || :
-	sudo docker rm -f $(container_name)-dn1 || :
-	sudo docker rm -f $(container_name) || :
+	$(DOCKER_CMD) rm -f consul-leader || :
+	$(DOCKER_CMD) rm -f $(container_name)-zk0 || :
+	$(DOCKER_CMD) rm -f $(container_name)-rm || :
+	$(DOCKER_CMD) rm -f $(container_name)-dn0 || :
+	$(DOCKER_CMD) rm -f $(container_name)-dn1 || :
+	$(DOCKER_CMD) rm -f $(container_name) || :
 
 exec-consul:
 	$(DOCKER_CMD) exec -i -t consul-leader /bin/bash
