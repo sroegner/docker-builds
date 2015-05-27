@@ -8,7 +8,7 @@ ENV HADOOP_HDFS_HOME=/usr/hdp/current/hadoop-hdfs-client
 ENV HADOOP_MAPRED_HOME=/usr/hdp/current/hadoop-mapreduce-client
 ENV HADOOP_YARN_HOME=/usr/hdp/current/hadoop-yarn-client
 ENV HADOOP_LIBEXEC_DIR=/usr/hdp/current/hadoop-client/libexec
-ENV CONSUL_VERSION=0.5.1
+ENV CONSUL_VERSION=0.5.2
 ENV CONFD_VERSION=0.9.0
 
 ENV REFRESHED_AT 2015-03-29
@@ -19,7 +19,7 @@ RUN rpm -ivh http://epel.mirror.constant.com/7/x86_64/e/epel-release-7-5.noarch.
     yum clean all; \
     pip install supervisor 
 
-RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.2.0.0/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
+RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.2.4.2/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
     yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client zookeeper 
     
 RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /var/log/hadoop /var/log/hadoop-yarn /var/log/supervisor /var/log/consul /var/lib/consul/data /var/lib/consul/ui /etc/consul /etc/consul-leader /var/lib/zookeeper; \
