@@ -3,7 +3,7 @@ MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
 RUN rpmdb --rebuilddb; yum -y install gcc-c++
-ENV ACCUMULO_VERSION 1.6.2
+ENV ACCUMULO_VERSION 1.7.0
 
 RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz | tar xz --no-same-owner -C /usr/lib 
 
