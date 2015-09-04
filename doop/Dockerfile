@@ -19,7 +19,7 @@ RUN rpm -ivh http://epel.mirror.constant.com/7/x86_64/e/epel-release-7-5.noarch.
     yum clean all; \
     pip install supervisor 
 
-RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.2.4.2/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
+RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.3.0.0/hdp.repo -o /etc/yum.repos.d/hdp.repo; \
     yum -y install hadoop hadoop-hdfs hadoop-libhdfs hadoop-yarn hadoop-mapreduce hadoop-client zookeeper 
     
 RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /var/log/hadoop /var/log/hadoop-yarn /var/log/supervisor /var/log/consul /var/lib/consul/data /var/lib/consul/ui /etc/consul /etc/consul-leader /var/lib/zookeeper; \
