@@ -10,7 +10,7 @@ image:
 	$(DOCKER_CMD) build -t=$(tag) .
 
 push:
-	$(DOCKER_CMD) push -f $(tag)
+	$(DOCKER_CMD) push $(tag)
 
 container:
 	$(DOCKER_CMD) run -d --name=$(container_name) $(volumes) \
