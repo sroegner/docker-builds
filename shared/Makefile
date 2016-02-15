@@ -6,7 +6,10 @@ clean:
 	$(DOCKER_CMD) stop $(container_name) || :
 	$(DOCKER_CMD) rm $(container_name) || :
 
-image:	
+pre-image-hook:
+	echo nop
+
+image:	pre-image-hook
 	$(DOCKER_CMD) build -t=$(tag) .
 
 push:
