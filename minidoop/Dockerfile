@@ -18,12 +18,16 @@ RUN apk add --update curl py-pip lzo rsync zip openjdk7-jre-base; \
 RUN curl -L http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.3.4.0/tars/hadoop-2.7.1.2.3.4.0-3485.tar.gz | tar xz -C /usr/lib
 RUN curl -L http://apache.osuosl.org/zookeeper/stable/zookeeper-3.4.6.tar.gz | tar xz -C /usr/lib
 
+RUN cd /usr/lib/hadoop-2.7.1.2.3.4.0-3485 && \
+    rm -rf share/doc share/hadoop/kms share/hadoop/httpfs; \
+    find . -name '*sources*jar' -exec rm -f {} \;
+
 RUN addgroup hadoop; \
     for n in hdfs mapred yarn zookeeper; do \
       echo -e "hadoop\nhadoop" adduser -S -G hadoop $n; \
     done
     
-RUN cat /etc/passwd
+RUN getent passwd hdfs
 
 RUN mkdir -p /data1/hdfs /data1/mapred /data1/yarn /var/log/hadoop /var/log/hadoop-yarn /var/log/supervisor /var/log/consul /var/lib/consul/data /var/lib/consul/ui /etc/consul /etc/consul-leader /var/lib/zookeeper; \
     chown hdfs.hadoop /data1/hdfs && \
