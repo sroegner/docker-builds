@@ -28,7 +28,7 @@ shell:
 	$(DOCKER_CMD) run -i -t $(tag) /bin/bash
 
 erase: clean
-	$(DOCKER_CMD) rmi $(tag) 
+	$(DOCKER_CMD) rmi -f $(tag) || :
 
 logs:
 	$(DOCKER_CMD) logs $(container_name)
