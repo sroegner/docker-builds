@@ -6,7 +6,7 @@
   </property>
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>resourcemanager.node.doop.local</value>
+    <value>resourcemanager.doop.local</value>
   </property>
   <property>
     <name>yarn.resourcemanager.zk-num-retries</name>
