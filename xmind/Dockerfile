@@ -12,7 +12,7 @@ RUN echo "export PS1='\e[1;31m\]\u@\h:\w\\$\[\e[0m\] '" >> /root/.bashrc
 
 RUN apt-get install -y curl default-jre libwebkitgtk-1.0-0 lame xterm
 
-RUN curl --fail --silent -L http://www.xmind.net/xmind/downloads/xmind-linux-3.5.3.201506180105_amd64.deb -o /tmp/xmind.deb && \
+RUN curl --fail --silent -L http://www.xmind.net/xmind/downloads/xmind-7-update1-linux_amd64.deb -o /tmp/xmind.deb && \
     dpkg -i /tmp/xmind.deb
 
 ENV DISPLAY :0
