@@ -1,3 +1,5 @@
+#!/bin/bash
+
 tag=docker.io/sroegner/accumulo
 container_name=accumulo-cluster
 accumulo_net=accumulo-docker-local
