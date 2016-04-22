@@ -1,2 +1,2 @@
-datanode0.node.doop.local
-datanode1.node.doop.local
+datanode0.docker.local
+datanode1.docker.local

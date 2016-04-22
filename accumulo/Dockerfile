@@ -3,7 +3,7 @@ MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
 RUN rpmdb --rebuilddb; yum -y install gcc-c++
-ENV ACCUMULO_VERSION 1.7.0
+ENV ACCUMULO_VERSION 1.7.1
 
 RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz | tar xz --no-same-owner -C /usr/lib 
 
@@ -23,7 +23,6 @@ COPY accumulo.conf /var/lib/accumulo/conf
 COPY init_accumulo.sh /usr/lib/accumulo/bin/
 COPY add_user.sh /tmp/
 COPY supervisor/ /etc/supervisor/conf.d/
-COPY consul /etc/consul/
 
 RUN  chown -R accumulo.accumulo /var/lib/accumulo/conf; \
      chmod 700 /var/lib/accumulo/conf

@@ -36,3 +36,6 @@ logs:
 info:
 	echo "Buildinfo for $(tag)"
 
+check-network:
+	$(DOCKER_CMD) network inspect $(NET) &>/dev/null || $(DOCKER_CMD) network create -d bridge --subnet=$(CIDR) $(NET)
+

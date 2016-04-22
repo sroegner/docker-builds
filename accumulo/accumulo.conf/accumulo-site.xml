@@ -23,7 +23,7 @@
 
   <property>
     <name>instance.zookeeper.host</name>
-    <value>zookeeper.node.doop.local:2181</value>
+    <value>zookeeper.docker.local:2181</value>
     <description>comma separated list of zookeeper servers</description>
   </property>
 

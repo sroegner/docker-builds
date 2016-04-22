@@ -17,7 +17,7 @@ fi
 # start a single (not recommended) consul leader container
 echo start consul leader
 docker run -d --name=consul-leader \
-              --hostname=consul.node.doop.local ${tag} \
+              --hostname=consul.docker.local ${tag} \
               /usr/sbin/consul agent -server -bootstrap-expect=1 \
               -data-dir=/var/lib/consul/data -config-dir=/etc/consul-leader
 
@@ -27,14 +27,14 @@ dns_ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' consul-leade
 echo start hdfs
 # start the namenode, secondarynamenode and a datanode process
 # the datanode process is a compromise to allow accumulo init to create dfs objects
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=namenode.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=namenode.docker.local ${link_arg} \
               -e="SVCLIST=namenode,secondarynamenode,datanode" \
               --name=${container_name}-namenode ${tag} /usr/bin/supervisord -n
 
 echo start a zookeeper container before init
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=zookeeper.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=zookeeper.docker.local ${link_arg} \
               -e="SVCLIST=zookeeper" \
               --name=${container_name}-zk0  ${tag} /usr/bin/supervisord -n
 
@@ -46,30 +46,30 @@ docker exec ${container_name}-namenode /usr/lib/accumulo/bin/init_accumulo.sh
 
 echo start tservers
 # ready to start some tablet servers
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=tserver0.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=tserver0.docker.local ${link_arg} \
               -e="SVCLIST=datanode,accumulo-tserver" \
               --name=${container_name}-tserver0 ${tag} /usr/bin/supervisord -n
 
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=tserver1.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=tserver1.docker.local ${link_arg} \
               -e="SVCLIST=datanode,accumulo-tserver" \
               --name=${container_name}-tserver1 ${tag} /usr/bin/supervisord -n
 
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=tserver2.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=tserver2.docker.local ${link_arg} \
               -e="SVCLIST=datanode,accumulo-tserver" \
               --name=${container_name}-tserver2 ${tag} /usr/bin/supervisord -n
 
 echo start accumulo master
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=master.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=master.docker.local ${link_arg} \
               -e="SVCLIST=accumulo-master,accumulo-monitor,accumulo-gc,accumulo-tracer" \
               --name=${container_name}-master ${tag} /usr/bin/supervisord -n
 
 echo start accumulo proxy
-docker run -d --dns=${dns_ip} --dns-search=node.doop.local \
-              --hostname=proxy.node.doop.local ${link_arg} \
+docker run -d --dns=${dns_ip} --dns-search=docker.local \
+              --hostname=proxy.docker.local ${link_arg} \
               -e="SVCLIST=accumulo-proxy" \
               --name=${container_name}-proxy ${tag} /usr/bin/supervisord -n
 

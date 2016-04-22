@@ -1,5 +1,6 @@
-dnsdomain := doop.local
-NET := doop-local
+dnsdomain := docker.local
+NET       := doop-local
+CIDR      := 172.26.1.0/24
 
 include ../shared/Makefile.vars
 hostname_template := $(container_name).$(dnsdomain)
@@ -10,9 +11,6 @@ INSPECT_ADDRESS := $(DOCKER_CMD) inspect --format '{{(index .NetworkSettings.Net
 image:	
 	cp -rv ../shared/config.zk $(CURDIR)/conf.zk
 	$(DOCKER_CMD) build -t=$(tag) .
-
-check-network:
-	$(DOCKER_CMD) network inspect $(NET) &>/dev/null || $(DOCKER_CMD) network create -d bridge --subnet=172.26.0.0/16 $(NET)
 
 cluster: check-network
 	$(DOCKER_CMD) run -d --net=$(NET) --hostname=namenode.$(dnsdomain) --net-alias=namenode.$(dnsdomain) -e="SVCLIST=namenode,secondarynamenode" --name=$(container_name) $(tag) /usr/bin/supervisord -n
