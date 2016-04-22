@@ -4,14 +4,18 @@ tag=docker.io/sroegner/accumulo
 container_name=accumulo-cluster
 accumulo_net=accumulo-docker-local
 
-if [ "$1" = "-clean" ]
+if [ "$1" = "-clean" -o "$1" = "shutdown" ]
 then
-  echo cleaning up as requested
-  docker rm -f consul-leader
+	echo "Shutting down all Accumulo containers ($1)"
   for c in namenode zookeeper tserver0 tserver1 tserver2 master proxy
   do
     docker rm -f ${container_name}-${c}
   done
+fi
+
+if [ "$1" = "shutdown" ]
+then
+	exit 0
 fi
 
 run_container() {
