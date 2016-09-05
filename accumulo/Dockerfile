@@ -3,9 +3,9 @@ MAINTAINER Steffen Roegner "steffen.roegner@gmail.com"
 USER root
 
 RUN rpmdb --rebuilddb; yum -y install gcc-c++
-ENV ACCUMULO_VERSION 1.7.1
+ENV ACCUMULO_VERSION 1.7.2
 
-RUN curl -L http://apache.osuosl.org/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz | tar xz --no-same-owner -C /usr/lib 
+RUN curl -L http://apache.mirror.anlx.net/accumulo/${ACCUMULO_VERSION}/accumulo-${ACCUMULO_VERSION}-bin.tar.gz| tar xz --no-same-owner -C /usr/lib 
 
 RUN ln -s /usr/lib/accumulo-${ACCUMULO_VERSION} /usr/lib/accumulo; \
     useradd -u 6040 -G hadoop -d /var/lib/accumulo accumulo; \
